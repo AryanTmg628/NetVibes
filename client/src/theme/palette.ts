@@ -2,7 +2,7 @@ export const palette = {
   primary: {
     main: "#1976d2", // Blue
     light: "#035DED",
-    dark: "#115293",
+    dark: "#102992",
   },
   secondary: {
     main: "#dc004e", // Pink
@@ -33,5 +33,6 @@ export const palette = {
   text: {
     primary: "#ffffff",
     secondary: "#555",
+    black: "#000000",
   },
 };
