@@ -1,0 +1,16 @@
+{
+  "menus": [
+    {
+      "name": "Home"
+    },
+    {
+      "name": "Pages"
+    },
+    {
+      "name": "Hosting"
+    },
+    {
+      "name": "About"
+    }
+  ]
+}
