@@ -9,16 +9,18 @@ interface IconifyPropsInterface {
   height?: number;
   color?: string;
   sx?: object;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Iconify: FC<IconifyPropsInterface> = forwardRef(
-  ({ icon, width = 20, sx, height, color }, ref) => (
+  ({ icon, width = 20, sx, height, color, onClick }, ref) => (
     <Box
       ref={ref}
       component={Icon}
       className="component-iconify"
       icon={icon}
       color={color}
+      onClick={onClick}
       height={height}
       sx={{ width: width, ...sx }}
     />
