@@ -11,7 +11,7 @@ export const IntroCard = () => {
   return (
     <Card
       sx={{
-        backgroundColor: "primary.main",
+        backgroundColor: "primary.dark",
         border: "none",
         display: "flex",
         p: "5rem 20rem",
