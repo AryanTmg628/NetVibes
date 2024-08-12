@@ -1,16 +1,69 @@
 {
   "menus": [
     {
-      "name": "Home"
+      "name": "Home",
+      "subcontent": [
+        { "name": "Home Images", "redirect": "about-us" },
+        { "name": "Home Domain Search ", "redirect": "about-us" }
+      ]
     },
     {
-      "name": "Pages"
+      "name": "Pages",
+      "subcontent": [
+        { "name": "About us", "redirect": "about-us" },
+        { "name": "Our Services", "redirect": "about-us" },
+        { "name": "Client Reviews", "redirect": "about-us" },
+        { "name": "Pricing", "redirect": "pricing" },
+        { "name": "Image Gallery", "redirect": "image-gallery" },
+        { "name": "Login", "redirect": "login" },
+        { "name": "Register", "redirect": "register" }
+      ]
     },
     {
-      "name": "Hosting"
+      "name": "Hosting",
+      "subcontent": [
+        {
+          "name": "Shared Hosting",
+          "redirect": "about-us",
+          "icon": "uil:server",
+          "description": "Innovate reliable quality"
+        },
+        {
+          "name": "VPS Hosting",
+          "redirect": "about-us",
+          "icon": "icon-park-outline:code-computer",
+          "description": "Efficiently maintained."
+        },
+        {
+          "name": "Website Hosting",
+          "redirect": "about-us",
+          "icon": "clarity:host-group-solid",
+          "description": "Efficiently maintained."
+        }
+      ]
     },
     {
-      "name": "About"
+      "name": "About",
+      "subcontent": [
+        {
+          "name": "Contact Us",
+          "redirect": "about-us",
+          "icon": "material-symbols:contact-phone-rounded",
+          "description": "Face any problem contact with us"
+        },
+        {
+          "name": "About Us",
+          "redirect": "about-us",
+          "icon": "material-symbols:roundabout-right",
+          "description": "We are leading hosting company"
+        },
+        {
+          "name": "Network",
+          "redirect": "about-us",
+          "icon": "akar-icons:network",
+          "description": "Data must be kept safe and secure"
+        }
+      ]
     }
   ]
 }
