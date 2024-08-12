@@ -17,40 +17,38 @@ const CustomBox = styled(Box)(({ theme }) => ({
 
 export const TopBar: FC = () => {
   const renderTechnicalSupport = (
-    <CustomBox>
+    <CustomBox alignItems="center">
       <Iconify
         icon="material-symbols-light:call"
         color="custom.grey.200"
-        height={20}
+        width={15}
         sx={{ "&:hover": { cursor: "pointer" } }}
       />
-      <HoverTypography paragraph>
-        24x7 Technical Support {company.phone}
-      </HoverTypography>
+      <HoverTypography>24x7 Technical Support {company.phone}</HoverTypography>
     </CustomBox>
   );
 
   const renderAuthentication = (
     <Stack direction="row" spacing={2}>
-      <CustomBox>
+      <CustomBox alignItems="center">
         <Iconify
           icon="ep:avatar"
           color="custom.grey.200"
-          width={20}
-          height={20}
+          width={15}
+          height={15}
           sx={{ "&:hover": { cursor: "pointer" } }}
         />
-        <HoverTypography paragraph>Login</HoverTypography>
+        <HoverTypography>Login</HoverTypography>
       </CustomBox>
-      <CustomBox>
+      <CustomBox alignItems="center">
         <Iconify
           icon="uis:lock"
           color="custom.grey.200"
-          width={20}
-          height={20}
+          width={15}
+          height={15}
           sx={{ "&:hover": { cursor: "pointer" } }}
         />
-        <HoverTypography paragraph>Register</HoverTypography>
+        <HoverTypography>Register</HoverTypography>
       </CustomBox>
     </Stack>
   );
@@ -60,7 +58,7 @@ export const TopBar: FC = () => {
       alignItems="center"
       bgcolor="custom.grey.100"
       paddingX="20rem"
-      paddingTop="1rem"
+      paddingY="1rem"
     >
       {renderTechnicalSupport}
       {renderAuthentication}
