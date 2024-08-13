@@ -5,6 +5,7 @@ import FlexBox from "../../utils/box/styled-box";
 import HoverTypography from "../../utils/typography/styled-typography";
 import Iconify from "../common/iconify/iconify";
 import company from "/src/data/company.json";
+import { useNavigate } from "react-router-dom";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -16,6 +17,11 @@ const CustomBox = styled(Box)(({ theme }) => ({
 }));
 
 export const TopBar: FC = () => {
+  const redirect = useNavigate();
+
+  const changePath = (path: string) => {
+    redirect(`/${path}`);
+  };
   const renderTechnicalSupport = (
     <CustomBox alignItems="center">
       <Iconify
@@ -30,22 +36,23 @@ export const TopBar: FC = () => {
 
   const renderAuthentication = (
     <Stack direction="row" spacing={2}>
-      <CustomBox alignItems="center">
+      <CustomBox alignItems="center" onClick={() => changePath("auth/login")}>
         <Iconify
           icon="ep:avatar"
           color="custom.grey.200"
           width={15}
-          height={15}
           sx={{ "&:hover": { cursor: "pointer" } }}
         />
         <HoverTypography>Login</HoverTypography>
       </CustomBox>
-      <CustomBox alignItems="center">
+      <CustomBox
+        alignItems="center"
+        onClick={() => changePath("auth/register")}
+      >
         <Iconify
           icon="uis:lock"
           color="custom.grey.200"
           width={15}
-          height={15}
           sx={{ "&:hover": { cursor: "pointer" } }}
         />
         <HoverTypography>Register</HoverTypography>
