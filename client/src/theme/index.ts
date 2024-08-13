@@ -9,6 +9,19 @@ const theme = createTheme({
   typography: {
     ...typography,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: palette.primary.dark,
+          color: palette.text.primary,
+          "&:hover": {
+            backgroundColor: palette.primary.dark,
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;
