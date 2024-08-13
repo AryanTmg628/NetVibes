@@ -6,4 +6,8 @@ export const typography = {
     fontSize: "1.5rem",
     color: "#ffffff",
   },
+  h6: {
+    fontSize: "1.1rem",
+    color: "#ffffff",
+  },
 };
