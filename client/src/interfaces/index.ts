@@ -10,3 +10,8 @@ export interface MenuSubContentInterface {
   icon?: string;
   description?: string;
 }
+
+export interface CustomTextFieldInterface {
+  name: string;
+  label: string;
+}
