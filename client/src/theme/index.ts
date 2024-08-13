@@ -21,6 +21,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: palette.custom.grey["300"], // Default border color
+            },
+            "&:hover fieldset": {
+              borderColor: palette.text.black, // Border color on hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: palette.primary.dark, // Border color when focused
+            },
+          },
+        },
+      },
+    },
   },
 });
 
