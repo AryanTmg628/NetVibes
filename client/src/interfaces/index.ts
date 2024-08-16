@@ -14,4 +14,6 @@ export interface MenuSubContentInterface {
 export interface CustomTextFieldInterface {
   name: string;
   label: string;
+  sx?: object;
+  shrink?: boolean;
 }

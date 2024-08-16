@@ -13,6 +13,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          textTransform: "capitalize",
           backgroundColor: palette.primary.dark,
           color: palette.text.primary,
           "&:hover": {
@@ -33,6 +34,9 @@ const theme = createTheme({
             },
             "&.Mui-focused fieldset": {
               borderColor: palette.primary.dark, // Border color when focused
+            },
+            "& .MuiOutlinedInput-input": {
+              color: palette.text.black,
             },
           },
         },

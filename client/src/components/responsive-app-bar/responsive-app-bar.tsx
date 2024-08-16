@@ -5,6 +5,7 @@ import {
   Toolbar,
   Typography,
   Stack,
+  Button,
 } from "@mui/material";
 import { FC, useState } from "react";
 import Iconify from "../common/iconify/iconify";
@@ -39,6 +40,14 @@ export const ResponsiveAppBar: FC = () => {
               subcontent={menu?.subcontent}
             />
           ))}
+          <Button
+            sx={{
+              backgroundColor: "primary.light",
+              "&:hover": { backgroundColor: "primary.light" },
+            }}
+          >
+            Get Started
+          </Button>
         </FlexBox>
       </Toolbar>
     </AppBar>
@@ -47,6 +56,7 @@ export const ResponsiveAppBar: FC = () => {
 
 export const FeatureMenu = () => {
   const [anchorELNav, setAnchorELNav] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorELNav);
   const openMenuItem = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorELNav(event.currentTarget);
   };
@@ -62,11 +72,7 @@ export const FeatureMenu = () => {
         color="text.black"
         sx={{ "&:hover": { cursor: "pointer" } }}
       />
-      <Menu
-        anchorEl={anchorELNav}
-        open={Boolean(anchorELNav)}
-        onClose={closeMenuItem}
-      >
+      <Menu anchorEl={anchorELNav} open={open} onClose={closeMenuItem}>
         {menus.menus.map((menu: { name: string }, index: number) => (
           <MenuItem
             key={index}
@@ -87,27 +93,23 @@ export const FeatureMenu = () => {
 
 const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
   const [anchorELNav, setAnchorELNav] = useState<null | HTMLElement>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const open = Boolean(anchorELNav);
   const openMenuItem = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event.currentTarget);
     setAnchorELNav(event.currentTarget);
-    setIsMenuOpen(true);
   };
 
   const closeMenuItem = () => {
     setAnchorELNav(null);
-    setIsMenuOpen(false);
-  };
-  const handleMouseLeave = () => {
-    setIsMenuOpen(false);
   };
   return (
-    <FlexBox
-      alignItems="center"
-      onClick={openMenuItem}
-      aria-controls="single-menu"
-    >
-      <HoverTypography variant="body2" color="text.black">
+    <FlexBox alignItems="center">
+      <HoverTypography
+        variant="body2"
+        color="text.black"
+        aria-controls={open ? "nav-menu" : undefined}
+        aria-haspopup="true"
+        onMouseEnter={openMenuItem}
+      >
         {name}
       </HoverTypography>
       <Iconify
@@ -118,10 +120,11 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
       <Menu
         id="single-menu"
         anchorEl={anchorELNav}
-        open={isMenuOpen}
+        open={open}
         onClose={closeMenuItem}
-        onMouseLeave={handleMouseLeave}
-        keepMounted
+        MenuListProps={{
+          "aria-labelledby": "nav-menu",
+        }}
       >
         {subcontent?.map((menu: MenuSubContentInterface, index: number) => (
           <MenuItem

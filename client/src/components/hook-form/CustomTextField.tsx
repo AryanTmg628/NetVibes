@@ -6,6 +6,8 @@ import { FC } from "react";
 export const CustomTextField: FC<CustomTextFieldInterface> = ({
   name,
   label,
+  sx,
+  shrink = true,
   ...other
 }) => {
   const { control } = useFormContext();
@@ -22,7 +24,12 @@ export const CustomTextField: FC<CustomTextFieldInterface> = ({
           error={!!error}
           label={label}
           placeholder={label}
+          InputLabelProps={shrink ? undefined : { shrink: false }}
+          onChange={(event) => {
+            field.onChange(event.target.value);
+          }}
           sx={{
+            ...sx,
             "&:hover": {
               color: "blue",
             },

@@ -2,6 +2,7 @@ import { Card, CardMedia, Typography, Stack } from "@mui/material";
 import company from "src/data/company.json";
 import { FC } from "react";
 import FlexBox from "../../utils/box/styled-box";
+import { SearchDomain } from "../search-domain/search-domain";
 
 interface IntroductionSectionInterface {
   sx?: object;
@@ -56,9 +57,17 @@ const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
         <Typography variant="h5">In The World</Typography>
       </Stack>
       <Stack spacing={1} sx={{ width: "80%" }}>
-        <Typography variant="body2" paragraph color="text.primary">
+        <Typography
+          variant="body2"
+          paragraph
+          color="text.primary"
+          textAlign="justify"
+        >
           {company.objectives}
         </Typography>
+      </Stack>
+      <Stack spacing={1} sx={{ width: "80%" }}>
+        <SearchDomain />
       </Stack>
     </FlexBox>
   );

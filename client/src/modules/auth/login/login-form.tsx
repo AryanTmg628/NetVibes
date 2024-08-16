@@ -1,7 +1,9 @@
+import React from "react";
 import { Stack, Typography, Box } from "@mui/material";
 import { CustomTextField } from "../../../components/hook-form/CustomTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+import HoverTypography from "../../../utils/typography/styled-typography";
 
 export const LoginForm = () => {
   const defaultValues = {
@@ -36,12 +38,14 @@ export const LoginForm = () => {
           <CustomTextField name="email" label="Email" />
           <CustomTextField name="password" label="Password" />
           <Stack direction="row" justifyContent="flex-end">
-            <Typography variant="body1" color="text.black">
+            <HoverTypography variant="body1" color="custom.grey.200">
               Forget your password ?
-            </Typography>
+            </HoverTypography>
           </Stack>
           <Stack direction="row" justifyContent="flex-end" pt={2}>
-            <LoadingButton variant="contained">Login </LoadingButton>
+            <LoadingButton variant="contained">
+              <Typography variant="body1">Login </Typography>
+            </LoadingButton>
           </Stack>
         </Stack>
       </FormProvider>
