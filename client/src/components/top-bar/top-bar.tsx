@@ -64,7 +64,7 @@ export const TopBar: FC = () => {
       justifyContent="space-between"
       alignItems="center"
       bgcolor="custom.grey.100"
-      paddingX="20rem"
+      paddingX="3rem"
       paddingY="1rem"
     >
       {renderTechnicalSupport}

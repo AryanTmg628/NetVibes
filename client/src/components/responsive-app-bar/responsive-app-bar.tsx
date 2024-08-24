@@ -22,7 +22,7 @@ export const ResponsiveAppBar: FC = () => {
       sx={{
         backgroundColor: "text.primary",
         boxShadow: "none",
-        px: "20rem",
+        px: "3rem",
       }}
     >
       <Toolbar disableGutters>

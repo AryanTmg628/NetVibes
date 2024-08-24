@@ -17,3 +17,9 @@ export interface CustomTextFieldInterface {
   sx?: object;
   shrink?: boolean;
 }
+
+export interface CardInfoInterface {
+  title: string;
+  content: string;
+  icon?: string;
+}

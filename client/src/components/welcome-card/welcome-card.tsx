@@ -31,10 +31,8 @@ export const WelcomeCard = () => {
         p: "1rem",
         flexDirection: "column",
         flex: 1,
-        display: {
-          xs: "none",
-          sm: "flex",
-        },
+        display: "flex",
+        borderRadius: { sm: "1rem", xs: "1rem" },
       }}
     >
       <Stack flex={1} justifyContent="center">
@@ -51,7 +49,7 @@ export const WelcomeCard = () => {
           orientation="horizontal"
           sx={{ opacity: "0.6", backgroundColor: "text.primary" }}
         />
-        <Stack spacing={1} mt={3}>
+        <Stack spacing={1} mt={3} sx={{ display: { xs: "none", md: "block" } }}>
           <Typography variant="h6">
             Domain And Hosting Service Platform
           </Typography>
@@ -60,7 +58,9 @@ export const WelcomeCard = () => {
           </Typography>
         </Stack>
       </Stack>
-      <Typography variant="body1">&copy; T Tech Pvt. Ltd</Typography>
+      <Typography variant="body1" sx={{ display: { xs: "none", md: "block" } }}>
+        &copy; T Tech Pvt. Ltd
+      </Typography>
     </StyledCard>
   );
 };

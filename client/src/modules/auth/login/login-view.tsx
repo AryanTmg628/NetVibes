@@ -1,7 +1,7 @@
 import { WelcomeCard } from "../../../components/welcome-card/welcome-card";
 import FlexBox from "../../../utils/box/styled-box";
 import { LoginForm } from "./login-form";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 export const LoginView = () => {
   return (
     <FlexBox
@@ -12,10 +12,14 @@ export const LoginView = () => {
         backgroundColor: "custom.grey.100",
       }}
     >
-      <Stack direction="row" width="90%" maxWidth="800px">
+      <Box
+        width="90%"
+        maxWidth="800px"
+        sx={{ display: { md: "flex", sm: "block", xs: "block" } }}
+      >
         <WelcomeCard />
         <LoginForm />
-      </Stack>
+      </Box>
     </FlexBox>
   );
 };

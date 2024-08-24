@@ -5,6 +5,7 @@ export const typography = {
   h5: {
     fontSize: "1.5rem",
     color: "#ffffff",
+    fontWeight: "bold",
   },
   h6: {
     fontSize: "1.1rem",
