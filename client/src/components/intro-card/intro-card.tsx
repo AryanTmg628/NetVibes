@@ -57,14 +57,13 @@ const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
       flexDirection="column"
       gap="1rem"
     >
-      <Stack spacing={1} sx={{ width: "80%" }}>
+      <Stack spacing={1} sx={{ width: "100%" }} maxWidth="700px">
         <Typography variant="h5">
-          {company.name} Best Hosting Platform
+          {company.name} Best Hosting Platform In Nepal
         </Typography>
-        <Typography variant="h5">In Nepal</Typography>
       </Stack>
 
-      <Stack spacing={1} sx={{ width: "80%" }}>
+      <Stack spacing={1} sx={{ width: "100%" }} maxWidth="700px">
         <Typography
           variant="body2"
           paragraph
@@ -74,7 +73,7 @@ const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
           {company.objectives}
         </Typography>
       </Stack>
-      <Stack spacing={1} sx={{ width: "80%" }}>
+      <Stack spacing={1} sx={{ width: "100%" }} maxWidth="900px">
         <SearchDomain />
       </Stack>
     </FlexBox>

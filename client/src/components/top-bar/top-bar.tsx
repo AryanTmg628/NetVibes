@@ -66,6 +66,7 @@ export const TopBar: FC = () => {
       bgcolor="custom.grey.100"
       paddingX="3rem"
       paddingY="1rem"
+      sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
     >
       {renderTechnicalSupport}
       {renderAuthentication}

@@ -26,11 +26,13 @@ export const ResponsiveAppBar: FC = () => {
       }}
     >
       <Toolbar disableGutters>
+        <FeatureMenu />
         <FlexBox
           gap="1rem"
           justifyContent="space-between"
           alignItems="center"
           width="100%"
+          sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
         >
           <Logo sx={{ flex: 1 }} />
           {menus.menus.map((menu: SingleMenuInterface, index: number) => (
@@ -65,7 +67,18 @@ export const FeatureMenu = () => {
     setAnchorELNav(null);
   };
   return (
-    <>
+    <FlexBox
+      sx={{
+        display: {
+          md: "none",
+          sm: "none",
+          xs: "flex",
+        },
+      }}
+      justifyContent="space-between"
+      alignItems="center"
+      width={1}
+    >
       <Iconify
         icon="cil:hamburger-menu"
         onClick={openMenuItem}
@@ -87,7 +100,8 @@ export const FeatureMenu = () => {
           </MenuItem>
         ))}
       </Menu>
-    </>
+      <Logo />
+    </FlexBox>
   );
 };
 
