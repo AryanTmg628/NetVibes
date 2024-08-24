@@ -6,6 +6,7 @@ import {
   Typography,
   Stack,
   Button,
+  Drawer,
 } from "@mui/material";
 import { FC, useState } from "react";
 import Iconify from "../common/iconify/iconify";
@@ -13,7 +14,12 @@ import menus from "/src/data/menus.json";
 import FlexBox from "../../utils/box/styled-box";
 import HoverTypography from "../../utils/typography/styled-typography";
 import { Logo } from "../common/logo/logo";
-import { MenuSubContentInterface, SingleMenuInterface } from "../../interfaces";
+import {
+  ContentCollapseInterface,
+  MenuSubContentInterface,
+  SingleMenuInterface,
+} from "../../interfaces";
+import { ContentCollapse } from "../common/content-collapse/content-collapse";
 
 export const ResponsiveAppBar: FC = () => {
   return (
@@ -57,14 +63,14 @@ export const ResponsiveAppBar: FC = () => {
 };
 
 export const FeatureMenu = () => {
-  const [anchorELNav, setAnchorELNav] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorELNav);
-  const openMenuItem = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorELNav(event.currentTarget);
+  const [showDrawer, setShowDrawer] = useState(false);
+
+  const openDrawer = () => {
+    setShowDrawer(true);
   };
 
-  const closeMenuItem = () => {
-    setAnchorELNav(null);
+  const closeDrawer = () => {
+    setShowDrawer(false);
   };
   return (
     <FlexBox
@@ -81,25 +87,23 @@ export const FeatureMenu = () => {
     >
       <Iconify
         icon="cil:hamburger-menu"
-        onClick={openMenuItem}
+        onClick={openDrawer}
         color="text.black"
         sx={{ "&:hover": { cursor: "pointer" } }}
       />
-      <Menu anchorEl={anchorELNav} open={open} onClose={closeMenuItem}>
-        {menus.menus.map((menu: { name: string }, index: number) => (
-          <MenuItem
-            key={index}
-            sx={{
-              p: "1rem",
-              backgroundColor: "#000000",
-            }}
-          >
-            <Typography variant="body2" paragraph>
-              {menu.name}
-            </Typography>
-          </MenuItem>
-        ))}
-      </Menu>
+      <Drawer open={showDrawer} onClose={closeDrawer}>
+        <Stack spacing={2} paddingY={6} paddingX={4} width="60vw">
+          {menus?.menus?.map((menu: SingleMenuInterface, index: number) => (
+            <ContentCollapse
+              title={menu.name}
+              subContent={menu.subcontent}
+              key={index}
+              plus="mdi-light:chevron-down"
+              minus="mdi-light:chevron-up"
+            />
+          ))}
+        </Stack>
+      </Drawer>
       <Logo />
     </FlexBox>
   );

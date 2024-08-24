@@ -9,16 +9,17 @@ export const CommunicateChannel = () => {
       alignItems="center"
       gap={3}
       mb={2}
+      height="15vh"
     >
       <FlexBox
         justifyContent="center"
         alignItems="center"
         gap={3}
-        maxWidth="650px"
+        maxWidth="1000px"
         width="90%"
         display={{ md: "flex", sm: "flex", xs: "block" }}
       >
-        <Stack spacing={1} mb={{ md: "0", sm: "0", xs: "1rem" }} width={1}>
+        <Stack spacing={1} mb={{ md: "0", sm: "0", xs: "1rem", flex: 1 }}>
           <Typography variant="h6">Need some help?</Typography>
           <Typography variant="body1" color="custom.grey.300">
             Whenever you are stuck on where to start, hit up our experts
@@ -26,12 +27,7 @@ export const CommunicateChannel = () => {
           </Typography>
         </Stack>
 
-        <Stack
-          direction="row"
-          gap={1}
-          width={1}
-          justifyContent={{ xs: "center" }}
-        >
+        <Stack direction="row" gap={1} justifyContent={{ xs: "center" }}>
           <Button
             variant="contained"
             sx={{

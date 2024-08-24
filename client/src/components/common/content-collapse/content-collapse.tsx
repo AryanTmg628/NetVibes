@@ -2,11 +2,16 @@ import FlexBox from "../../../utils/box/styled-box";
 import { Box, Collapse, Stack, Typography } from "@mui/material";
 import Iconify from "../iconify/iconify";
 import { FC, useState } from "react";
-import { ContentCollapseInterface } from "../../../interfaces";
+import {
+  ContentCollapseInterface,
+  MenuSubContentInterface,
+} from "../../../interfaces";
 
 export const ContentCollapse: FC<ContentCollapseInterface> = ({
   title,
-  subContent,
+  subContent = null,
+  plus = "ic-round-add",
+  minus = "ph-minus-bold",
 }) => {
   const [isCollpase, setIsCollapse] = useState(false);
 
@@ -14,7 +19,11 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
     setIsCollapse(!isCollpase);
   };
   return (
-    <Box>
+    <Box
+      borderBottom="1px solid"
+      borderColor="custom.grey.500"
+      paddingBottom={1}
+    >
       <FlexBox
         justifyContent="space-between"
         onClick={toggleCollapse}
@@ -23,19 +32,34 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
         <Typography variant="h6" color="text.black" sx={{ fontSize: "1rem" }}>
           {title}
         </Typography>
-        <Stack>
-          <Collapse in={!isCollpase} onClick={toggleCollapse}>
-            <Iconify icon="ic-round-add" />
-          </Collapse>
-          <Collapse in={isCollpase} onClick={toggleCollapse}>
-            <Iconify icon="ph:minus-bold" />
-          </Collapse>
-        </Stack>
+        {subContent && (
+          <Stack>
+            <Collapse in={!isCollpase} onClick={toggleCollapse}>
+              <Iconify icon={plus} color="text.black" />
+            </Collapse>
+            <Collapse in={isCollpase} onClick={toggleCollapse}>
+              <Iconify icon={minus} color="text.black" />
+            </Collapse>
+          </Stack>
+        )}
       </FlexBox>
       <Collapse in={isCollpase}>
-        <Typography variant="body1" color="custom.grey.200" padding={1}>
-          {subContent}{" "}
-        </Typography>
+        {Array.isArray(subContent) ? (
+          subContent?.map((sub: MenuSubContentInterface, index: number) => (
+            <Typography
+              key={index}
+              variant="body1"
+              color="custom.grey.200"
+              padding={1}
+            >
+              {sub?.name}
+            </Typography>
+          ))
+        ) : (
+          <Typography variant="body1" color="custom.grey.200" padding={1}>
+            {subContent}
+          </Typography>
+        )}
       </Collapse>
     </Box>
   );

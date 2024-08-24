@@ -26,5 +26,7 @@ export interface CardInfoInterface {
 
 export interface ContentCollapseInterface {
   title: string;
-  subContent: string;
+  subContent?: string | Array<any>;
+  plus?: string;
+  minus?: string;
 }

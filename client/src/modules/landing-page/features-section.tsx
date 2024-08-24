@@ -2,6 +2,7 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import company from "../../data/company.json";
 import { CardInfo } from "../../components/common/card-info/card-info";
+import FlexBox from "../../utils/box/styled-box";
 export const FeaturesSection: FC = () => {
   const features = [
     {
@@ -21,27 +22,33 @@ export const FeaturesSection: FC = () => {
     },
   ];
   return (
-    <Box p="2rem 3rem" mt={5}>
-      <Stack spacing={1} marginBottom={2}>
-        <Typography variant="h5" color="primary.dark" textAlign="center">
-          {company.name} Helps You Succeed
-        </Typography>
-        <Typography variant="body2" color="custom.grey.200" textAlign="center">
-          Grow your website faster by using {company.name} as your foundation.
-        </Typography>
+    <FlexBox p="2rem 3rem" mt={5} flexDirection="column" alignItems="center">
+      <Stack maxWidth="1000px" width={1}>
+        <Stack spacing={1} marginBottom={2}>
+          <Typography variant="h5" color="primary.dark" textAlign="center">
+            {company.name} Helps You Succeed
+          </Typography>
+          <Typography
+            variant="body2"
+            color="custom.grey.200"
+            textAlign="center"
+          >
+            Grow your website faster by using {company.name} as your foundation.
+          </Typography>
+        </Stack>
+        <Grid container spacing={1}>
+          {features.map((feat, index) => (
+            <Grid item xs={12} md={4}>
+              <CardInfo
+                key={index}
+                icon={feat.icon}
+                title={feat.title}
+                content={feat.content}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Stack>
-      <Grid container spacing={1}>
-        {features.map((feat, index) => (
-          <Grid item xs={12} md={4}>
-            <CardInfo
-              key={index}
-              icon={feat.icon}
-              title={feat.title}
-              content={feat.content}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+    </FlexBox>
   );
 };

@@ -6,7 +6,7 @@ import faq from "../../data/faq.json";
 export const FAQ = () => {
   return (
     <FlexBox flexDirection="column" alignItems="center" paddingY={3}>
-      <Stack spacing={1} width="90%" maxWidth="650px">
+      <Stack spacing={1} width="90%" maxWidth="1000px">
         <Typography variant="h5" color="primary.dark">
           Frequently Asked Questions{" "}
         </Typography>
@@ -19,6 +19,7 @@ export const FAQ = () => {
               key={index}
               title={question.title}
               subContent={question.subContent}
+              plus="ic-round-add"
             />
           ))}
         </Stack>
