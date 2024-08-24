@@ -6,7 +6,7 @@ import faq from "../../data/faq.json";
 export const FAQ = () => {
   return (
     <FlexBox flexDirection="column" alignItems="center" paddingY={3}>
-      <Stack spacing={1} width="90%" maxWidth="700px">
+      <Stack spacing={1} width="90%" maxWidth="650px">
         <Typography variant="h5" color="primary.dark">
           Frequently Asked Questions{" "}
         </Typography>
