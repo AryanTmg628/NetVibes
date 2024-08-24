@@ -23,3 +23,8 @@ export interface CardInfoInterface {
   content: string;
   icon?: string;
 }
+
+export interface ContentCollapseInterface {
+  title: string;
+  subContent: string;
+}
