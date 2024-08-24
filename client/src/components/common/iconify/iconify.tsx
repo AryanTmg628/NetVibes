@@ -18,7 +18,14 @@ const Iconify: FC<IconifyPropsInterface> = forwardRef(
       className="component-iconify"
       icon={icon}
       color={color}
-      sx={{ width, height: width, ...sx }}
+      sx={{
+        width,
+        height: width,
+        ...sx,
+        "&:hover": {
+          cursor: "pointer",
+        },
+      }}
       {...other}
     />
   ),
