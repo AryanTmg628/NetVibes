@@ -12,6 +12,6 @@ class AuthenticationService:
         passw = password.encode("utf-8")
         hashed_password = bcrypt.hashpw(passw, salt)
         formatted_hash = (
-            f"{email}{salt.decode('utf-8')}{hashed_password.decode('utf-8')}"
+            f"{email}|{salt.decode('utf-8')}|{hashed_password.decode('utf-8')}"
         )
         return formatted_hash
