@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "authentication",
     "email_service",
+    "rest_framework_swagger",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -157,3 +159,13 @@ EMAIL_PORT = getenv("EMAIL_PORT")
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD")
+
+
+# caching in the memory
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "127.0.0.1:11211",
+    }
+}
