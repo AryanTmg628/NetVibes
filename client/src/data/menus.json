@@ -19,6 +19,16 @@
         { "name": "Register", "redirect": "register" }
       ]
     },
+
+    {
+      "name": "Domain",
+      "subcontent": [
+        { "name": "Domain Search", "redirect": "domain/search" },
+        { "name": "Register Domain", "redirect": "domain/register" },
+        { "name": "Transfer Domain", "redirect": "domain/transfer" },
+        { "name": "Renew Domain", "redirect": "domain/renew" }
+      ]
+    },
     {
       "name": "Hosting",
       "subcontent": [
