@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-i(%l7sc$a4kvhpp3%o6@gahb#s3&%+!l1aaxgi77-(ci4r_yxk"
+SECRET_KEY = "jaldk;jfkafnkcajselkfja;lkjeasiolufopiejaljakjfolekjfkjasdlkdjafkjalkjflajlkdjalkjeflakjefskajf"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -168,4 +168,15 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         "LOCATION": "127.0.0.1:11211",
     }
+}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "authentication.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
 }
