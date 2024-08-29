@@ -19,10 +19,21 @@ export const SearchDomain: FC = () => {
       <Stack direction="row" marginTop="2rem">
         <CustomTextField
           name="domainName"
-          label="Search Your Domain"
-          // shrink={false}
+          placeholder="Search Your Domain"
           sx={{
             backgroundColor: "text.primary",
+            borderRadiius: "1rem",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "text.primary",
+              },
+              "&:hover fieldset": {
+                borderColor: "text.primary",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "text.primary",
+              },
+            },
           }}
         />
         <LoadingButton
