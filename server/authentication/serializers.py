@@ -15,3 +15,9 @@ class UserCreateSerializer(ModelSerializer):
 class VerifyRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     username = serializers.CharField(max_length=150)
+    v_code = serializers.IntegerField()
+
+
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(max_length=150)

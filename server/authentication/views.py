@@ -2,13 +2,18 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from authentication.serializers import UserCreateSerializer, VerifyRegisterSerializer
+from authentication.serializers import (
+    UserCreateSerializer,
+    UserLoginSerializer,
+    VerifyRegisterSerializer,
+)
 from authentication.services import AuthenticationService as authService
 from email_service.services import EmailServices
 from utils.response import CustomResponse as cr
@@ -22,6 +27,7 @@ User = get_user_model()
 class UserViewSet(ModelViewSet):
 
     authentication_classes = []
+    permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
 
@@ -42,6 +48,9 @@ class UserViewSet(ModelViewSet):
             )
 
             serializer.validated_data["password"] = hashed_pass
+            serializer.validated_data["email"] = serializer.validated_data[
+                "email"
+            ].lower()  # we are stroign the email in lower case
 
             code = es.generate_verification_code(6)
             send_email = es.send_verification_code(
@@ -54,7 +63,10 @@ class UserViewSet(ModelViewSet):
             serializer.validated_data["v_code"] = code
 
             if not send_email:
-                return cr.error(message="Error while sending email.")
+                return cr.error(
+                    message="Error while sending email.",
+                    status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+                )
 
             # storing the details in the cache
             cache.set(
@@ -65,7 +77,6 @@ class UserViewSet(ModelViewSet):
 
             return cr.success(
                 message="Verification code has been sent to your email.Please verify it",
-                status_code=HTTP_201_CREATED,
             )
 
         except ValidationError:
@@ -80,6 +91,8 @@ class VerificationViewSet(APIView):
     """
 
     authentication_classes = []
+
+    permission_classes = [AllowAny]
     serializer_class = VerifyRegisterSerializer
 
     def post(self, request: Request) -> Response:
@@ -93,10 +106,14 @@ class VerificationViewSet(APIView):
             # getting the details from cache
             cached_user = cache.get(f"user_{user_email}_{user_username}")
 
+            # if cached_user is None then it means time is out
+            if cached_user is None:
+                return cr.error(message="Time out")
+
             stored_verification_code = cached_user["v_code"]
             if int(stored_verification_code) != int(user_verification_code):
                 return cr.error(message="Invalid verification code.")
-            del cached_user["verification_code"]
+            del cached_user["v_code"]
 
             serial = UserCreateSerializer(data=cached_user)
             serial.is_valid(raise_exception=True)
@@ -104,6 +121,7 @@ class VerificationViewSet(APIView):
 
             return cr.success(
                 message="Your account has been successfully created.",
+                status_code=HTTP_201_CREATED,
             )
 
         except ValidationError:
@@ -112,5 +130,30 @@ class VerificationViewSet(APIView):
             )
 
 
-class LoginView(APIView):
-    pass
+class LoginViewSet(APIView):
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    serializer_class = UserLoginSerializer
+
+    def post(self, request: Request) -> Response:
+        serializer = self.serializer_class(
+            data=request.data,
+        )
+        try:
+            serializer.is_valid(raise_exception=True)
+
+            user = authService.check_login_credentials(
+                email=serializer.validated_data["email"],
+                password=serializer.validated_data["password"],
+            )
+
+            if not user:
+                return cr.error(message="Invalid email and password")
+
+            acess_token = authService.generateJWTToken(user)
+            print("The token", acess_token)
+
+            return cr.success(data={acess_token}, message="Login Successful")
+        except ValidationError:
+            return cr.error(data=serializer.errors, message="Validation error")
