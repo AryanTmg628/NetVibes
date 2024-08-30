@@ -14,10 +14,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "capitalize",
-          backgroundColor: palette.primary.dark,
+          backgroundColor: palette.text.black,
           color: palette.text.primary,
           "&:hover": {
-            backgroundColor: palette.primary.dark,
+            backgroundColor: palette.text.black,
+            color: palette.text.primary,
           },
         },
       },
@@ -33,7 +34,7 @@ const theme = createTheme({
               borderColor: palette.text.black, // Border color on hover
             },
             "&.Mui-focused fieldset": {
-              borderColor: palette.primary.dark, // Border color when focused
+              borderColor: palette.text.black, // Border color on hover
             },
             "& .MuiOutlinedInput-input": {
               color: palette.text.black,

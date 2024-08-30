@@ -15,8 +15,8 @@
         { "name": "Client Reviews", "redirect": "about-us" },
         { "name": "Pricing", "redirect": "pricing" },
         { "name": "Image Gallery", "redirect": "image-gallery" },
-        { "name": "Login", "redirect": "login" },
-        { "name": "Register", "redirect": "register" }
+        { "name": "Login", "redirect": "auth/login" },
+        { "name": "Register", "redirect": "auth/register" }
       ]
     },
 

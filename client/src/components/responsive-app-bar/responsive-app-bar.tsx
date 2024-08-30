@@ -64,6 +64,7 @@ export const ResponsiveAppBar: FC = () => {
 };
 
 export const FeatureMenu = () => {
+  const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
 
   const openDrawer = () => {
@@ -72,6 +73,10 @@ export const FeatureMenu = () => {
 
   const closeDrawer = () => {
     setShowDrawer(false);
+  };
+
+  const handleSubContentClick = (path: string) => {
+    navigate(`/${path}`);
   };
   return (
     <FlexBox
@@ -101,6 +106,7 @@ export const FeatureMenu = () => {
               key={index}
               plus="mdi-light:chevron-down"
               minus="mdi-light:chevron-up"
+              handleClick={handleSubContentClick}
             />
           ))}
         </Stack>

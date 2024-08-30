@@ -1,9 +1,9 @@
-import React from "react";
-import { Stack, Typography, Box } from "@mui/material";
+import { Stack, Typography, Box, Link, useTheme } from "@mui/material";
 import { CustomTextField } from "../../../components/hook-form/CustomTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import HoverTypography from "../../../utils/typography/styled-typography";
+import { CustomButton } from "../../../components/common/custom-button/custom-button";
 
 export const LoginForm = () => {
   const defaultValues = {
@@ -43,12 +43,25 @@ export const LoginForm = () => {
             </HoverTypography>
           </Stack>
           <Stack direction="row" justifyContent="flex-end" pt={2}>
-            <LoadingButton variant="contained">
-              <Typography variant="body1">Login </Typography>
-            </LoadingButton>
+            <CustomButton bgColor="text.dark" value="Login" />
           </Stack>
         </Stack>
       </FormProvider>
+      <Stack>
+        <Typography variant="body2">
+          Don't have an account ?
+          <Box component="span">
+            <Link
+              href="/auth/register"
+              color="text.black"
+              fontWeight="bold"
+              marginX={1}
+            >
+              Register
+            </Link>
+          </Box>
+        </Typography>
+      </Stack>
     </Stack>
   );
 };

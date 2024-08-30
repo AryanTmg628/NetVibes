@@ -21,7 +21,7 @@ export const DomainSearch: FC = () => {
         alignItems="center"
         bgcolor="rgba(16,41,146,0.7)"
       >
-        <Stack maxWidth="700px" spacing={2}>
+        <Stack maxWidth="700px" spacing={2} width="95%">
           <Typography variant="h3" textAlign="center" color="text.primary">
             Use Domain Checker To Find Unique Domains
           </Typography>

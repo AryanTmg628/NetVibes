@@ -12,6 +12,7 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
   subContent = null,
   plus = "ic-round-add",
   minus = "ph-minus-bold",
+  handleClick,
 }) => {
   const [isCollpase, setIsCollapse] = useState(false);
 
@@ -51,6 +52,9 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
               variant="body1"
               color="custom.grey.200"
               padding={1}
+              onClick={() => {
+                if (handleClick) handleClick(sub?.redirect);
+              }}
             >
               {sub?.name}
             </Typography>
