@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "authentication",
     "email_service",
+    "domain",
     "rest_framework_swagger",
     "drf_yasg",
 ]
@@ -173,8 +174,7 @@ CACHES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "authentication.authentication.JWTAuthentication",
+        # "authentication.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
