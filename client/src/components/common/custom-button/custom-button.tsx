@@ -13,7 +13,7 @@ export const CustomButton: FC<CustomButtonInterface> = ({
         backgroundColor: `${bgColor}`,
         color,
 
-        p: "0rem 1rem",
+        p: "0.3rem 1rem",
         "&:hover": {
           backgroundColor: `${bgColor}`,
           color,
