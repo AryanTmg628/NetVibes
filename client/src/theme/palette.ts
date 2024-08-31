@@ -32,7 +32,7 @@ export const palette = {
     main: "#03a9f4",
   },
   success: {
-    main: "#4caf50",
+    main: "#23D75F",
   },
   background: {
     default: "#f5f5f5",
