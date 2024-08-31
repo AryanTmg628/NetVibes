@@ -1,4 +1,4 @@
-import { DomainSearch } from "../../pages/domain/components/domain-search/domain-search";
+import { DomainSearch } from "../../modules/domain/components/domain-search/domain-search.tsx";
 import { DomainView } from "../../pages/domain/domain-view.tsx";
 
 const domain = {
