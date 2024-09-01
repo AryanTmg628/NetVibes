@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import { keyframes } from "@mui/material";
 const StyledCard = styled(Card)(({ theme }) => ({
   minWidth: "350px",
-  backgroundColor: theme.palette.primary.dark,
+  backgroundColor: theme.palette.text.black,
   boxSizing: "border-box",
   borderTopLeftRadius: "1rem",
   borderBottomLeftRadius: "1rem",
@@ -31,8 +31,7 @@ export const WelcomeCard = () => {
         p: "1rem",
         flexDirection: "column",
         flex: 1,
-        display: "flex",
-        borderRadius: { sm: "1rem", xs: "1rem" },
+        display: { md: "flex", sm: "block", xs: "none" },
       }}
     >
       <Stack flex={1} justifyContent="center">
@@ -49,7 +48,7 @@ export const WelcomeCard = () => {
           orientation="horizontal"
           sx={{ opacity: "0.6", backgroundColor: "text.primary" }}
         />
-        <Stack spacing={1} mt={3} sx={{ display: { xs: "none", md: "block" } }}>
+        <Stack spacing={1} mt={3}>
           <Typography variant="h6">
             Domain And Hosting Service Platform
           </Typography>
@@ -58,9 +57,7 @@ export const WelcomeCard = () => {
           </Typography>
         </Stack>
       </Stack>
-      <Typography variant="body1" sx={{ display: { xs: "none", md: "block" } }}>
-        &copy; T Tech Pvt. Ltd
-      </Typography>
+      <Typography variant="body1">&copy; T Tech Pvt. Ltd</Typography>
     </StyledCard>
   );
 };

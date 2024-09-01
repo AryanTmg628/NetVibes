@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 
 from .config import COMPANY_NAME
 
@@ -33,12 +33,13 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=(AllowAny,),
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("authentication.urls")),
+    path("api/", include("domain.urls")),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

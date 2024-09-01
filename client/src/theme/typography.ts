@@ -11,4 +11,10 @@ export const typography = {
     fontSize: "1.1rem",
     color: "#ffffff",
   },
+  h3: {
+    fontWeight: "bold",
+    "@media (max-width : 600px)": {
+      fontSize: "1.5rem",
+    },
+  },
 };

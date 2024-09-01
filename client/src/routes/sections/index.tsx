@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import { authRoutes } from "./auth";
+import { domainRoutes } from "./domain";
 import { LandingPage } from "../../pages/landing-page/landing-page";
 
 export const Router = () => {
@@ -10,5 +11,6 @@ export const Router = () => {
     },
 
     ...authRoutes,
+    ...domainRoutes,
   ]);
 };

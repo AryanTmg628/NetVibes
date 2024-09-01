@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
@@ -36,7 +37,19 @@ class UserViewSet(ModelViewSet):
     #         return UserCreateSerializer
     #     return super().get_serializer_class()
 
+    @swagger_auto_schema(operation_summary="Create user endpoint")
     def create(self, request: Request) -> Response:
+        """
+        Create user py sending user credentials via HTTP Post method
+        If ValidationError then response code HTTP_400_BAD_REQUEST
+
+        unique 6digits verification code is generated and send to the given email
+
+        The user credentials along with verification code is stored in the cache for some limited time
+
+        If bogus email is provided then response code HTTP_422_UNPROCESSABLE_ENTITY.
+
+        """
         serializer = self.serializer_class(data=request.data)
         es = EmailServices()
         try:
@@ -95,7 +108,21 @@ class VerificationViewSet(APIView):
     permission_classes = [AllowAny]
     serializer_class = VerifyRegisterSerializer
 
+    @swagger_auto_schema(
+        operation_summary="Verify authentication code to register the user"
+    )
     def post(self, request: Request) -> Response:
+        """
+        The email, username and v_code is send from the frontend
+
+        the details about that email will be retrieved from the cache that has been stored,
+
+        and the frontend v_code and stored verification code is compared
+
+        if they match then user is created
+
+        else  HTTP_400_BAD_REQUEST is send as response code
+        """
         serializer = self.serializer_class(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
@@ -136,7 +163,13 @@ class LoginViewSet(APIView):
     authentication_classes = []
     serializer_class = UserLoginSerializer
 
+    @swagger_auto_schema(operation_summary="Login user endpoint")
     def post(self, request: Request) -> Response:
+        """
+        Email and password sent by frontend is validated and integrity is checked.
+
+        If they matches then the jwtAccessToken is returned back as access_token in the response body
+        """
         serializer = self.serializer_class(
             data=request.data,
         )

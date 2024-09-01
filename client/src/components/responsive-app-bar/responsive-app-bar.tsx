@@ -20,6 +20,7 @@ import {
   SingleMenuInterface,
 } from "../../interfaces";
 import { ContentCollapse } from "../common/content-collapse/content-collapse";
+import { useNavigate } from "react-router-dom";
 
 export const ResponsiveAppBar: FC = () => {
   return (
@@ -63,6 +64,7 @@ export const ResponsiveAppBar: FC = () => {
 };
 
 export const FeatureMenu = () => {
+  const navigate = useNavigate();
   const [showDrawer, setShowDrawer] = useState(false);
 
   const openDrawer = () => {
@@ -71,6 +73,10 @@ export const FeatureMenu = () => {
 
   const closeDrawer = () => {
     setShowDrawer(false);
+  };
+
+  const handleSubContentClick = (path: string) => {
+    navigate(`/${path}`);
   };
   return (
     <FlexBox
@@ -100,6 +106,7 @@ export const FeatureMenu = () => {
               key={index}
               plus="mdi-light:chevron-down"
               minus="mdi-light:chevron-up"
+              handleClick={handleSubContentClick}
             />
           ))}
         </Stack>
@@ -110,6 +117,7 @@ export const FeatureMenu = () => {
 };
 
 const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
+  const navigate = useNavigate();
   const [anchorELNav, setAnchorELNav] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorELNav);
   const openMenuItem = (event: React.MouseEvent<HTMLElement>) => {
@@ -119,6 +127,10 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
   const closeMenuItem = () => {
     setAnchorELNav(null);
   };
+
+  const handleClick = (path: string) => {
+    navigate(`/${path}`);
+  };
   return (
     <FlexBox alignItems="center">
       <HoverTypography
@@ -126,7 +138,7 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
         color="text.black"
         aria-controls={open ? "nav-menu" : undefined}
         aria-haspopup="true"
-        onMouseEnter={openMenuItem}
+        onClick={openMenuItem}
       >
         {name}
       </HoverTypography>
@@ -164,8 +176,8 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
                 sx={{ "&:hover": { cursor: "pointer" } }}
               />
             )}
-            <Stack spacing={0.3}>
-              <Typography variant="body2">{menu.name}</Typography>
+            <Stack spacing={0.3} onClick={() => handleClick(menu?.redirect)}>
+              <Typography variant="body2">{menu?.name}</Typography>
               <Typography variant="body1" color="custom.grey.200">
                 {menu?.description}
               </Typography>
