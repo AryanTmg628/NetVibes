@@ -6,6 +6,7 @@ import Iconify from "../../../components/common/iconify/iconify";
 import company from "../../../data/company.json";
 import FlexBox from "../../../utils/box/styled-box";
 import { CustomButton } from "../../../components/common/custom-button/custom-button";
+import { VerficationDialog } from "../../../modals/auth/verification-dialog";
 
 export const RegisterView: FC = () => {
   return (
@@ -24,6 +25,7 @@ export const RegisterView: FC = () => {
       <Grid item xs={12} md={6.5} sm={6.5}>
         <RegisterForm />
       </Grid>
+      <VerficationDialog />
     </Grid>
   );
 };
