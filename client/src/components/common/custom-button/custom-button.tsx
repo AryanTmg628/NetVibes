@@ -6,6 +6,7 @@ export const CustomButton: FC<CustomButtonInterface> = ({
   bgColor,
   value,
   color,
+  sx,
 }) => {
   return (
     <Button
@@ -18,6 +19,7 @@ export const CustomButton: FC<CustomButtonInterface> = ({
           backgroundColor: `${bgColor}`,
           color,
         },
+        ...sx,
       }}
     >
       {value}
