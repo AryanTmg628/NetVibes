@@ -6,10 +6,12 @@ import { CustomCodeField } from "../../components/hook-form/custom-code-field";
 import { FormProvider, useForm } from "react-hook-form";
 import { CustomButton } from "../../components/common/custom-button/custom-button";
 import { BackButton } from "../../components/common/back-button/back-button";
+import { FC } from "react";
 
-export const VerficationDialog = () => {
-  const email = "AryanTamang@gmail.com";
-
+export const VerficationDialog: FC<{ email: string; username: string }> = ({
+  email,
+  username,
+}) => {
   const defaultValues = {
     v_code: "",
   };
@@ -19,6 +21,9 @@ export const VerficationDialog = () => {
   });
 
   const maskEmail = () => {
+    if (!email) {
+      return "";
+    }
     if (email.length <= 2) {
       // If the email length is 2 or less, just return the original string
       return email;
