@@ -44,3 +44,32 @@ export interface ContentCollapseInterface {
   minus?: string;
   handleClick?: (path: string) => void;
 }
+
+export interface CustomFormProviderInterface {
+  children: React.ReactNode;
+  methods: object;
+  onSubmit?: () => void;
+}
+
+export interface PersonInformationDataInterface {
+  first_name: string;
+  last_name: string;
+  state: string;
+  country: string;
+  street_address: string;
+  city: string;
+}
+
+export interface AccountSecurityInterface {
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+}
+
+export interface LinearAlternativeInterface {
+  getCurrentForm: () => JSX.Element;
+  activeStep: number;
+  handleNext: () => void;
+  handleBack: () => void;
+}
