@@ -9,29 +9,86 @@ import {
   useTheme,
   Link,
 } from "@mui/material";
-import { useState } from "react";
+import { FC, useState } from "react";
 import FlexBox from "../../../utils/box/styled-box";
 import { CustomTextField } from "../../../components/hook-form/CustomTextField";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import {
+  PersonalInformationSchema,
+  AccountSecuirtyInformationSchema,
+} from "./register-schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CustomFormProvider } from "../../../components/hook-form/form-provider/form-provider";
+import {
+  AccountSecurityInterface,
+  LinearAlternativeInterface,
+  PersonInformationDataInterface,
+} from "../../../interfaces";
 
 const steps = ["Personal Information", "Account Security"];
+
 export const RegisterForm = () => {
-  const defaultValues = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
-    password: "",
-    confirm_password: "",
-    state: "",
-    country: "",
-    street_address: "",
-    city: "",
+  const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({});
+  const handleNext = async () => {
+    if (activeStep === 0) {
+      onPersonalSubmit();
+    } else {
+      onAccountSubmit();
+    }
   };
 
-  const methods = useForm({
-    defaultValues,
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const getCurrentForm = () => {
+    return allSteps[activeStep];
+  };
+
+  const methods1 = useForm({
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      state: "",
+      country: "",
+      street_address: "",
+      city: "",
+    },
+    resolver: yupResolver(PersonalInformationSchema),
   });
+
+  const methods2 = useForm({
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+      confirm_password: "",
+    },
+    resolver: yupResolver(AccountSecuirtyInformationSchema),
+  });
+
+  const allSteps = [
+    <PersonalInformationForm methods={methods1} />,
+    <AccountSecurity methods={methods2} />,
+  ];
+
+  const { handleSubmit: personalHandleSubmit } = methods1;
+  const { handleSubmit: accountHandleSubmit } = methods2;
+
+  const onPersonalSubmit = personalHandleSubmit(
+    (data: PersonInformationDataInterface) => {
+      setFormData((prev) => ({ ...prev, ...data }));
+      setActiveStep(activeStep + 1);
+    },
+  );
+  const onAccountSubmit = accountHandleSubmit(
+    (data: AccountSecurityInterface) => {
+      setFormData((prev) => ({ ...prev, ...data }));
+      console.log(formData);
+    },
+  );
+
   return (
     <FlexBox
       flexDirection="column"
@@ -44,9 +101,12 @@ export const RegisterForm = () => {
         <Typography variant="h5" color="text.black" textAlign="center">
           Register Here
         </Typography>
-        <FormProvider {...methods}>
-          <LinearAlternativeLabel />
-        </FormProvider>
+        <LinearAlternativeLabel
+          getCurrentForm={getCurrentForm}
+          activeStep={activeStep}
+          handleNext={handleNext}
+          handleBack={handleBack}
+        />
         <Stack>
           <Typography variant="body2">
             Already have an account?
@@ -67,23 +127,13 @@ export const RegisterForm = () => {
   );
 };
 
-export default function LinearAlternativeLabel() {
-  const [activeStep, setActiveStep] = useState(0);
-
+const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
+  getCurrentForm,
+  activeStep,
+  handleNext,
+  handleBack,
+}) => {
   const theme = useTheme();
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const allSteps = [<PersonalInformationForm />, <AccountSecurity />];
-
-  const getForm = () => {
-    return allSteps[activeStep];
-  };
 
   return (
     <>
@@ -114,7 +164,7 @@ export default function LinearAlternativeLabel() {
       </Stepper>
       <>
         <Typography sx={{ my: 1 }} variant="h4" color="text.black">
-          {getForm()}
+          {getCurrentForm()}
         </Typography>
         <Box sx={{ display: "flex" }}>
           {activeStep !== 0 && (
@@ -130,34 +180,38 @@ export default function LinearAlternativeLabel() {
       </>
     </>
   );
-}
+};
 
-const PersonalInformationForm = () => {
+const PersonalInformationForm: FC<{ methods: any }> = ({ methods }) => {
   return (
-    <Stack spacing={2}>
-      <FlexBox gap={1}>
-        <CustomTextField name="first_name" label="First name" />
-        <CustomTextField name="last_name" label="Last name" />
-      </FlexBox>
+    <CustomFormProvider methods={methods}>
+      <Stack spacing={2}>
+        <FlexBox gap={1}>
+          <CustomTextField name="first_name" label="First name" />
+          <CustomTextField name="last_name" label="Last name" />
+        </FlexBox>
 
-      <FlexBox gap={1}>
-        <CustomTextField name="street_address" label="Street address" />
-        <CustomTextField name="city" label="City" />
-      </FlexBox>
-      <CustomTextField name="State" label="State" />
-      <CustomTextField name="Country" label="Country" />
-    </Stack>
+        <FlexBox gap={1}>
+          <CustomTextField name="street_address" label="Street address" />
+          <CustomTextField name="city" label="City" />
+        </FlexBox>
+        <CustomTextField name="state" label="State" />
+        <CustomTextField name="country" label="Country" />
+      </Stack>
+    </CustomFormProvider>
   );
 };
 
-const AccountSecurity = () => {
+const AccountSecurity: FC<{ methods: any }> = ({ methods }) => {
   return (
-    <Stack spacing={2}>
-      <CustomTextField name="email" label="Email" />
-      <CustomTextField name="username" label="Username" />
+    <CustomFormProvider methods={methods}>
+      <Stack spacing={2}>
+        <CustomTextField name="email" label="Email" />
+        <CustomTextField name="username" label="Username" />
 
-      <CustomTextField name="password" label="Password" />
-      <CustomTextField name="confirm_password" label="Confirm Password" />
-    </Stack>
+        <CustomTextField name="password" label="Password" />
+        <CustomTextField name="confirm_password" label="Confirm Password" />
+      </Stack>
+    </CustomFormProvider>
   );
 };

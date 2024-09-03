@@ -25,7 +25,7 @@ export const RegisterView: FC = () => {
       <Grid item xs={12} md={6.5} sm={6.5}>
         <RegisterForm />
       </Grid>
-      <VerficationDialog />
+      {/* <VerficationDialog /> */}
     </Grid>
   );
 };

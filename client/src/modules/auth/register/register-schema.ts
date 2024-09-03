@@ -1,8 +1,15 @@
 import * as Yup from "yup";
 
-export const RegisterSchema = Yup.object().shape({
+export const PersonalInformationSchema = Yup.object().shape({
   first_name: Yup.string().required("First name is required."),
   last_name: Yup.string().required("Last name is required."),
+  state: Yup.string().required("State is required."),
+  country: Yup.string().required("Select your country"),
+  street_address: Yup.string().required("Street address is required."),
+  city: Yup.string().required("City is required."),
+});
+
+export const AccountSecuirtyInformationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address.")
     .required("Email is required."),
@@ -16,17 +23,4 @@ export const RegisterSchema = Yup.object().shape({
       "Password and confirm password must match.",
     )
     .required("Confirm password is required."),
-  state: Yup.string().required("State is required."),
-  country: Yup.string().required("Select your country"),
-  street_address: Yup.string().required("Street address is required."),
-  city: Yup.string().required("City is required."),
-});
-
-export const PersonalInformationSchema = Yup.object().shape({
-  first_name: Yup.string().required("First name is required."),
-  last_name: Yup.string().required("Last name is required."),
-  state: Yup.string().required("State is required."),
-  country: Yup.string().required("Select your country"),
-  street_address: Yup.string().required("Street address is required."),
-  city: Yup.string().required("City is required."),
 });
