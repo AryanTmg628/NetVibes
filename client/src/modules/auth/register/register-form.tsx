@@ -24,12 +24,19 @@ import {
   LinearAlternativeInterface,
   PersonInformationDataInterface,
 } from "../../../interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/actions/auth/auth-actions";
+import { getAuthDetails } from "../../../store/selectors";
+import BlurLoader from "../../../components/common/blur-loader/blur-loader";
 
 const steps = ["Personal Information", "Account Security"];
 
 export const RegisterForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const { loading, error } = useSelector(getAuthDetails);
+  const dispatch = useDispatch();
+
   const handleNext = async () => {
     if (activeStep === 0) {
       onPersonalSubmit();
@@ -85,7 +92,7 @@ export const RegisterForm = () => {
   const onAccountSubmit = accountHandleSubmit(
     (data: AccountSecurityInterface) => {
       setFormData((prev) => ({ ...prev, ...data }));
-      console.log(formData);
+      dispatch(authActions.registerUser(formData));
     },
   );
 
@@ -123,6 +130,7 @@ export const RegisterForm = () => {
           </Typography>
         </Stack>
       </Stack>
+      {loading && <BlurLoader />}
     </FlexBox>
   );
 };
