@@ -7,6 +7,7 @@ export const PersonalInformationSchema = Yup.object().shape({
   country: Yup.string().required("Select your country"),
   street_address: Yup.string().required("Street address is required."),
   city: Yup.string().required("City is required."),
+  phone_number: Yup.string().required("Phone number is required."),
 });
 
 export const AccountSecuirtyInformationSchema = Yup.object().shape({

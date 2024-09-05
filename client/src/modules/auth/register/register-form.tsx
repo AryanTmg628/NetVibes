@@ -28,13 +28,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/actions/auth/auth-actions";
 import { getAuthDetails } from "../../../store/selectors";
 import BlurLoader from "../../../components/common/blur-loader/blur-loader";
+import { showSuccessToast } from "../../../utils/toastify/toastify";
+import { VerficationDialog } from "../../../modals/auth/verification-dialog";
 
 const steps = ["Personal Information", "Account Security"];
 
 export const RegisterForm = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [showVerificationDialog, setShowVerificationDialog] = useState(false);
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector(getAuthDetails);
+  const { loading, error, success } = useSelector(getAuthDetails);
   const dispatch = useDispatch();
 
   const handleNext = async () => {
@@ -61,6 +64,7 @@ export const RegisterForm = () => {
       country: "",
       street_address: "",
       city: "",
+      phone_number: "",
     },
     resolver: yupResolver(PersonalInformationSchema),
   });
@@ -81,7 +85,7 @@ export const RegisterForm = () => {
   ];
 
   const { handleSubmit: personalHandleSubmit } = methods1;
-  const { handleSubmit: accountHandleSubmit } = methods2;
+  const { handleSubmit: accountHandleSubmit, setError } = methods2;
 
   const onPersonalSubmit = personalHandleSubmit(
     (data: PersonInformationDataInterface) => {
@@ -92,9 +96,26 @@ export const RegisterForm = () => {
   const onAccountSubmit = accountHandleSubmit(
     (data: AccountSecurityInterface) => {
       setFormData((prev) => ({ ...prev, ...data }));
-      dispatch(authActions.registerUser(formData));
+      dispatch(authActions.registerUser({ ...formData, ...data }));
     },
   );
+
+  if (error) {
+    const errorKeys = Object.keys(error?.data);
+    if (!errorKeys) return;
+
+    errorKeys.map((err) => {
+      setError(err, {
+        type: "manual",
+        message: error?.data?.[err]?.[0],
+      });
+    });
+  }
+
+  if (success) {
+    showSuccessToast(success.message);
+    setShowVerificationDialog(true);
+  }
 
   return (
     <FlexBox
@@ -131,6 +152,12 @@ export const RegisterForm = () => {
         </Stack>
       </Stack>
       {loading && <BlurLoader />}
+      {showVerificationDialog && (
+        <VerficationDialog
+        // email={formData["email"]}
+        // username={formData["username"]}
+        />
+      )}
     </FlexBox>
   );
 };
@@ -205,6 +232,7 @@ const PersonalInformationForm: FC<{ methods: any }> = ({ methods }) => {
         </FlexBox>
         <CustomTextField name="state" label="State" />
         <CustomTextField name="country" label="Country" />
+        <CustomTextField name="phone_number" label="Phone number" />
       </Stack>
     </CustomFormProvider>
   );

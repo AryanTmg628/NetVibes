@@ -5,7 +5,7 @@ import { isAxiosError } from "axios";
 
 export function* registerUserSaga(action: { type: string; payload: string }) {
   try {
-    const response = yield call(AuthApiServices.registerUser(action?.payload));
+    const response = yield call(AuthApiServices.registerUser, action?.payload);
     if (response?.success) yield put(authActions.registerUserSucceed(response));
   } catch (error) {
     if (isAxiosError(error)) {
