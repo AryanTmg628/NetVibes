@@ -36,6 +36,7 @@ const steps = ["Personal Information", "Account Security"];
 export const RegisterForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [showVerificationDialog, setShowVerificationDialog] = useState(false);
+  const [apiCalled, setApiCalled] = useState(false);
   const [formData, setFormData] = useState({});
   const { loading, error, success } = useSelector(getAuthDetails);
   const dispatch = useDispatch();
