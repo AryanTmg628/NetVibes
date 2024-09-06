@@ -7,6 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { CustomButton } from "../../components/common/custom-button/custom-button";
 import { BackButton } from "../../components/common/back-button/back-button";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 
 export const VerficationDialog: FC<{ email: string; username: string }> = ({
   email,
@@ -36,6 +37,22 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
 
     return firstChar + mask + lastWord;
   };
+
+  const validate = () => {
+    const v_code = methods.getValues("v_code");
+    if (!v_code || v_code.length < 6) {
+      methods.setError("v_code", {
+        type: "manual",
+        message: "Verificatin code is required and must be 6 digits",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const verifyAccount = () => {
+    if (!validate()) return;
+  };
   return (
     <Dialog open={true} fullScreen>
       <DialogContent
@@ -63,7 +80,11 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
             <Stack maxWidth="600px" marginTop={3} spacing={4}>
               <CustomCodeField name="v_code" />
               <FlexBox alignItems="center" flexDirection="column" gap={3}>
-                <CustomButton value="Verify" sx={{ width: "200px" }} />
+                <CustomButton
+                  value="Verify"
+                  sx={{ width: "200px" }}
+                  onClick={verifyAccount}
+                />
                 <BackButton redirect="/auth/login" content="Back to Login" />
               </FlexBox>
             </Stack>

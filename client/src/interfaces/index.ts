@@ -22,6 +22,8 @@ export interface CustomButtonInterface {
   bgColor?: string;
   value?: string;
   color?: string;
+  sx?: { any: any };
+  onClick: () => void;
 }
 
 export interface ImageComponentInterface {
