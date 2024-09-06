@@ -97,11 +97,12 @@ export const RegisterForm = () => {
   const onAccountSubmit = accountHandleSubmit(
     (data: AccountSecurityInterface) => {
       setFormData((prev) => ({ ...prev, ...data }));
+      setApiCalled(true);
       dispatch(authActions.registerUser({ ...formData, ...data }));
     },
   );
 
-  if (error) {
+  if (error && apiCalled) {
     const errorKeys = Object.keys(error?.data);
     if (!errorKeys) return;
 
@@ -111,11 +112,14 @@ export const RegisterForm = () => {
         message: error?.data?.[err]?.[0],
       });
     });
+
+    setApiCalled(false);
   }
 
-  if (success) {
-    showSuccessToast(success.message);
+  if (success && apiCalled) {
     setShowVerificationDialog(true);
+    showSuccessToast(success.message);
+    setApiCalled(false);
   }
 
   return (
