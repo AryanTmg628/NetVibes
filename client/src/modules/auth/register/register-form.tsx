@@ -159,8 +159,8 @@ export const RegisterForm = () => {
       {loading && <BlurLoader />}
       {showVerificationDialog && (
         <VerficationDialog
-        // email={formData["email"]}
-        // username={formData["username"]}
+          email={formData["email"]}
+          username={formData["username"]}
         />
       )}
     </FlexBox>

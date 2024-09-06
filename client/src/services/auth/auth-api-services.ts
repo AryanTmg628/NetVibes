@@ -4,6 +4,12 @@ const registerUser = async (payload: any) => {
   return res?.data;
 };
 
+const verifyAccount = async (payload: any) => {
+  const res = await api.post("auth-verify/", payload);
+  return res?.data;
+};
+
 export const AuthApiServices = {
   registerUser,
+  verifyAccount,
 };
