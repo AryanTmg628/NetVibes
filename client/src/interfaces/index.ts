@@ -22,7 +22,7 @@ export interface CustomButtonInterface {
   bgColor?: string;
   value?: string;
   color?: string;
-  sx?: { any: any };
+  sx?: any;
   onClick: () => void;
 }
 
