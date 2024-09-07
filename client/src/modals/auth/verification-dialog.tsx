@@ -19,14 +19,14 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
   email,
   username,
 }) => {
-  const defaultValues = {
-    v_code: "",
-  };
-
   const { error, success } = useSelector(getAuthDetails);
   const [apiCalled, setApiCalled] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const defaultValues = {
+    v_code: "",
+  };
 
   const methods = useForm({
     defaultValues,
