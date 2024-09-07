@@ -6,8 +6,14 @@ import { CustomCodeField } from "../../components/hook-form/custom-code-field";
 import { FormProvider, useForm } from "react-hook-form";
 import { CustomButton } from "../../components/common/custom-button/custom-button";
 import { BackButton } from "../../components/common/back-button/back-button";
-import { FC } from "react";
-import { useSelector } from "react-redux";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthDetails } from "../../store/selectors";
+import { authActions } from "../../store/actions/auth/auth-actions";
+import { showSuccessToast } from "../../utils/toastify/toastify";
+import { useNavigate } from "react-router-dom";
+
+const PATH_AFTER_SUCCESS = "/auth/login/";
 
 export const VerficationDialog: FC<{ email: string; username: string }> = ({
   email,
@@ -16,6 +22,11 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
   const defaultValues = {
     v_code: "",
   };
+
+  const { error, success } = useSelector(getAuthDetails);
+  const [apiCalled, setApiCalled] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const methods = useForm({
     defaultValues,
@@ -38,6 +49,20 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
     return firstChar + mask + lastWord;
   };
 
+  if (success && apiCalled) {
+    showSuccessToast(success?.message);
+    setApiCalled(false);
+    navigate(PATH_AFTER_SUCCESS);
+  }
+
+  if (error && apiCalled) {
+    methods.setError("v_code", {
+      type: "manual",
+      message: "Invalid verification code",
+    });
+    setApiCalled(false);
+  }
+
   const validate = () => {
     const v_code = methods.getValues("v_code");
     if (!v_code || v_code.length < 6) {
@@ -52,6 +77,13 @@ export const VerficationDialog: FC<{ email: string; username: string }> = ({
 
   const verifyAccount = () => {
     if (!validate()) return;
+    const payload = {
+      email,
+      username,
+      v_code: methods.getValues("v_code"),
+    };
+    setApiCalled(true);
+    dispatch(authActions.verifyAccount(payload));
   };
   return (
     <Dialog open={true} fullScreen>
