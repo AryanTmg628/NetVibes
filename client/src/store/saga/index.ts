@@ -4,11 +4,13 @@ import { fetchDomainDetailsSaga } from "./domain/fetch-domain-details-saga";
 import { authActions } from "../actions/auth/auth-actions";
 import { registerUserSaga } from "./auth/register-user-saga";
 import { verifyAccountSaga } from "./auth/verify-account-saga";
+import { loginUserSaga } from "./auth/login-user-saga";
 
 export function* rootSaga() {
   yield all([
     takeLatest(domainActions.fetchDomainDetails, fetchDomainDetailsSaga),
     takeLatest(authActions.registerUser, registerUserSaga),
     takeLatest(authActions.verifyAccount, verifyAccountSaga),
+    takeLatest(authActions.loginUser, loginUserSaga),
   ]);
 }

@@ -41,6 +41,24 @@ const authSlice = createSlice({
       state.error = action?.payload;
       state.success = null;
     },
+    loginUser(state, action) {
+      state.loading = true;
+      state.error = null;
+      state.success = null;
+    },
+    loginUserSucced(state, action) {
+      state.loading = false;
+      state.error = null;
+      state.success = action?.payload;
+    },
+    loginUserFailed(state, action) {
+      state.loading = false;
+      state.success = null;
+      state.error = action?.payload;
+    },
+    setCurrentUser(state, action) {
+      state.currentUser = action?.payload;
+    },
   },
 });
 
