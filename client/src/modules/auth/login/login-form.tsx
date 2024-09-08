@@ -1,16 +1,54 @@
-import { Stack, Typography, Box, Link, useTheme } from "@mui/material";
+import { Stack, Typography, Box, Link } from "@mui/material";
 import { CustomTextField } from "../../../components/hook-form/CustomTextField";
 import { FormProvider, useForm } from "react-hook-form";
-import { LoadingButton } from "@mui/lab";
 import HoverTypography from "../../../utils/typography/styled-typography";
 import { CustomButton } from "../../../components/common/custom-button/custom-button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginSchema } from "./login-schema";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/actions/auth/auth-actions";
+import { useState } from "react";
+import { getAuthDetails } from "../../../store/selectors";
+import { showSuccessToast } from "../../../utils/toastify/toastify";
+import BlurLoader from "../../../components/common/blur-loader/blur-loader";
+import { jwtDecode } from "jwt-decode";
 
 export const LoginForm = () => {
+  const [apiCalled, setApiCalled] = useState(false);
+  const dispatch = useDispatch();
+
+  const { loading, success, error } = useSelector(getAuthDetails);
   const defaultValues = {
     email: "",
     password: "",
   };
-  const methods = useForm({ defaultValues });
+  const methods = useForm({
+    defaultValues,
+    resolver: yupResolver(LoginSchema),
+  });
+
+  const handleLogin = methods.handleSubmit((data) => {
+    setApiCalled(true);
+    dispatch(authActions.loginUser(data));
+  });
+
+  if (success && apiCalled) {
+    // storing user details in store
+
+    const token = success?.data[0];
+    const decoded = jwtDecode(token);
+    dispatch(authActions.setCurrentUser(decoded));
+    showSuccessToast(success?.message);
+    setApiCalled(false);
+  }
+
+  if (error && apiCalled) {
+    methods.setError("email", {
+      type: "manual",
+      message: error?.message,
+    });
+    setApiCalled(false);
+  }
 
   return (
     <Stack
@@ -43,7 +81,11 @@ export const LoginForm = () => {
             </HoverTypography>
           </Stack>
           <Stack direction="row" justifyContent="flex-end" pt={2}>
-            <CustomButton bgColor="text.dark" value="Login" />
+            <CustomButton
+              bgColor="text.dark"
+              value="Login"
+              onClick={handleLogin}
+            />
           </Stack>
         </Stack>
       </FormProvider>
@@ -62,6 +104,7 @@ export const LoginForm = () => {
           </Box>
         </Typography>
       </Stack>
+      {loading && <BlurLoader />}
     </Stack>
   );
 };
