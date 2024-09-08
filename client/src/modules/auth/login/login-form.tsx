@@ -14,10 +14,15 @@ import BlurLoader from "../../../components/common/blur-loader/blur-loader";
 import { jwtDecode } from "jwt-decode";
 
 export const LoginForm = () => {
+  // local state
+
   const [apiCalled, setApiCalled] = useState(false);
   const dispatch = useDispatch();
 
+  // store state
+
   const { loading, success, error } = useSelector(getAuthDetails);
+
   const defaultValues = {
     email: "",
     password: "",
