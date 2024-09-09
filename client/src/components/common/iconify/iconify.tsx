@@ -8,6 +8,7 @@ interface IconifyPropsInterface {
   width?: number | string;
   color?: string;
   sx?: object;
+  onClick?: () => void;
 }
 
 const Iconify: FC<IconifyPropsInterface> = forwardRef(
