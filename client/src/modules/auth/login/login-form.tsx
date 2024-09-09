@@ -12,6 +12,9 @@ import { getAuthDetails } from "../../../store/selectors";
 import { showSuccessToast } from "../../../utils/toastify/toastify";
 import BlurLoader from "../../../components/common/blur-loader/blur-loader";
 import { jwtDecode } from "jwt-decode";
+import { CustomPasswordField } from "../../../components/hook-form/custom-password-field";
+
+import InputAdornment from "@mui/material/InputAdornment";
 
 export const LoginForm = () => {
   // local state
@@ -79,7 +82,7 @@ export const LoginForm = () => {
       <FormProvider {...methods}>
         <Stack spacing={2}>
           <CustomTextField name="email" label="Email" />
-          <CustomTextField name="password" label="Password" />
+          <CustomPasswordField name="password" label="Password" />
           <Stack direction="row" justifyContent="flex-end">
             <HoverTypography variant="body1" color="custom.grey.200">
               Forget your password ?

@@ -30,6 +30,7 @@ import { getAuthDetails } from "../../../store/selectors";
 import BlurLoader from "../../../components/common/blur-loader/blur-loader";
 import { showSuccessToast } from "../../../utils/toastify/toastify";
 import { VerficationDialog } from "../../../modals/auth/verification-dialog";
+import { CustomPasswordField } from "../../../components/hook-form/custom-password-field";
 
 const steps = ["Personal Information", "Account Security"];
 
@@ -250,8 +251,8 @@ const AccountSecurity: FC<{ methods: any }> = ({ methods }) => {
         <CustomTextField name="email" label="Email" />
         <CustomTextField name="username" label="Username" />
 
-        <CustomTextField name="password" label="Password" />
-        <CustomTextField name="confirm_password" label="Confirm Password" />
+        <CustomPasswordField name="password" label="Password" />
+        <CustomPasswordField name="confirm_password" label="Confirm Password" />
       </Stack>
     </CustomFormProvider>
   );
