@@ -5,6 +5,7 @@ import { IntroCard } from "../../components/intro-card/intro-card";
 import { FeaturesSection } from "../../modules/landing-page/features-section";
 import { CommunicateChannel } from "../../components/communicate-channel/communicate-channel";
 import { FAQ } from "../../components/faq/faq";
+import { CopyRight } from "../../modules/landing-page/copyright-section/copyright-section";
 
 export const LandingPage = () => {
   return (
@@ -15,6 +16,7 @@ export const LandingPage = () => {
       <FeaturesSection />
       <CommunicateChannel />
       <FAQ />
+      <CopyRight />
     </Stack>
   );
 };
