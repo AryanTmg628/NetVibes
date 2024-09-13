@@ -23,6 +23,10 @@ import { ContentCollapse } from "../common/content-collapse/content-collapse";
 import { useNavigate } from "react-router-dom";
 
 export const ResponsiveAppBar: FC = () => {
+  const navigate = useNavigate();
+  const handleClick = (path: string) => {
+    navigate(`/${path}`);
+  };
   return (
     <AppBar
       position="relative"
@@ -54,6 +58,7 @@ export const ResponsiveAppBar: FC = () => {
               backgroundColor: "primary.light",
               "&:hover": { backgroundColor: "primary.light" },
             }}
+            onClick={() => handleClick("auth/register")}
           >
             Get Started
           </Button>
