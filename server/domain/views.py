@@ -37,5 +37,6 @@ class DomainViewSet(APIView):
                 message="Error while fetching domain result",
                 status_code=HTTP_503_SERVICE_UNAVAILABLE,
             )
+
         json_result = json.loads(json.dumps(result))
         return cr.success(message="Domain Search Successful", data=json_result)

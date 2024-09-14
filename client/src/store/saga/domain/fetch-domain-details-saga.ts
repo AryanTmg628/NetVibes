@@ -1,5 +1,7 @@
-import { call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { domainApiServices } from "../../../services/domain/domain-api-services";
+import { domainActions } from "../../actions/domain/domainActions";
+import { isAxiosError } from "axios";
 
 export function* fetchDomainDetailsSaga(action: {
   type: string;
@@ -7,8 +9,15 @@ export function* fetchDomainDetailsSaga(action: {
 }) {
   try {
     const response = yield call(
-      domainApiServices.getDomainDetails(action.payload),
+      domainApiServices.getDomainDetails,
+      action.payload,
     );
-    console.log("Te rsponse", response.success);
-  } catch (error) {}
+
+    if (response?.data?.success)
+      yield put(domainActions.domainDetailsSucceed(response?.data));
+  } catch (error) {
+    if (isAxiosError(error)) {
+      yield put(domainActions.domainDetailsFailed(error.response?.data));
+    } else yield put(domainActions.domainDetailsFailed(error));
+  }
 }
