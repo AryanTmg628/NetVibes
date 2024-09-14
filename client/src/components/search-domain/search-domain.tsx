@@ -4,14 +4,23 @@ import { CustomTextField } from "../hook-form/CustomTextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import Iconify from "../common/iconify/iconify";
+import { domainActions } from "../../store/actions/domain/domainActions";
+import { useDispatch } from "react-redux";
 
-export const SearchDomain: FC = () => {
+export const SearchDomain: FC = ({ handleSubmit }) => {
   const defaultValues = {
     domainName: "",
   };
 
   const methods = useForm({
     defaultValues,
+  });
+
+  const dispatch = useDispatch();
+
+  const onSubmit = methods.handleSubmit((data) => {
+    //updating the redux
+    dispatch(domainActions.setQueryDomain(data.domainName));
   });
 
   return (
@@ -44,6 +53,7 @@ export const SearchDomain: FC = () => {
               backgroundColor: "primary.light",
             },
           }}
+          onClick={onSubmit}
         >
           <Iconify icon="ic:outline-search" width={30} />
           <Typography variant="body2" sx={{ ml: "0.2rem" }}>
