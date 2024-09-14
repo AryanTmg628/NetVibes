@@ -1,20 +1,39 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import FlexBox from "../../../../utils/box/styled-box";
 import { Stack, Typography } from "@mui/material";
 import { SearchDomain } from "../../../../components/search-domain/search-domain";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { domainActions } from "../../../../store/actions/domain/domainActions";
 import { NotAvailable } from "../not-avaialable/not-available";
 import { CustomMultipleCheckBox } from "../../../../components/hook-form/custom-check-box";
 import { FormProvider, useForm } from "react-hook-form";
 import { CustomButton } from "../../../../components/common/custom-button/custom-button";
 import { Available } from "../available/available";
+import { getDomainDetails } from "../../../../store/selectors";
+import BlurLoader from "../../../../components/common/blur-loader/blur-loader";
 
 export const DomainSearch: FC = () => {
   const dispatch = useDispatch();
+  const [showLoader, setShowLoader] = useState(false);
+
+  const { domainDetails, error, loading, queryDomain } =
+    useSelector(getDomainDetails);
+
+  const isDomainAvailable = () => {
+    if (!domainDetails) return false;
+
+    return !domainDetails?.data?.registered; // since if domain is already registered i:e value is true then it should not be available
+  };
+
+  // if (loading) {
+  //   setShowLoader(true);
+  // }
+
+  console.log("The loading,loading", loading);
+
   useEffect(() => {
-    dispatch(domainActions.fetchDomainDetails("aryan.com"));
-  }, []);
+    if (queryDomain) dispatch(domainActions.fetchDomainDetails(queryDomain));
+  }, [queryDomain]);
   return (
     <FlexBox gap={2} flexDirection="column" alignItems="center">
       <FlexBox
@@ -49,10 +68,18 @@ export const DomainSearch: FC = () => {
       <Stack width="95%" direction="row" gap={10} p={3} maxWidth="1100px">
         <FilterSection />
         <Stack flex={1}>
-          <NotAvailable content="Domain(aryan.com) is not available." />
-          <Available content="Domain(aryan.com) is not available." />
+          {isDomainAvailable() && queryDomain && (
+            <Available content={`Domain(${queryDomain}) is available.`} />
+          )}
+
+          {!isDomainAvailable() && queryDomain && (
+            <NotAvailable
+              content={`Domain(${queryDomain}) is not available.`}
+            />
+          )}
         </Stack>
       </Stack>
+      {/* {showLoader && <BlurLoader />} */}
     </FlexBox>
   );
 };
