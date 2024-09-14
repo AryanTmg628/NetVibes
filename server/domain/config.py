@@ -5,7 +5,4 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-API_KEY = getenv("RAPIDAPI_KEY")
-API_HOST = getenv("RAPIDAPI_HOST")
-
-WHOIS_ENDPOINT = "/whois"
+API_KEY = getenv("WHOISJSON_API")
