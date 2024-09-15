@@ -5,11 +5,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import Iconify from "../common/iconify/iconify";
 import { domainActions } from "../../store/actions/domain/domainActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getDomainDetails } from "../../store/selectors";
 
-export const SearchDomain: FC = ({ handleSubmit }) => {
+export const SearchDomain: FC<{ handleClick: () => void }> = ({
+  handleClick,
+}) => {
+  const { loading, queryDomain } = useSelector(getDomainDetails);
   const defaultValues = {
-    domainName: "",
+    domainName: queryDomain || "",
   };
 
   const methods = useForm({
@@ -21,6 +25,8 @@ export const SearchDomain: FC = ({ handleSubmit }) => {
   const onSubmit = methods.handleSubmit((data) => {
     //updating the redux
     dispatch(domainActions.setQueryDomain(data.domainName));
+
+    if (handleClick) handleClick();
   });
 
   return (
@@ -53,6 +59,7 @@ export const SearchDomain: FC = ({ handleSubmit }) => {
               backgroundColor: "primary.light",
             },
           }}
+          loading={loading}
           onClick={onSubmit}
         >
           <Iconify icon="ic:outline-search" width={30} />
