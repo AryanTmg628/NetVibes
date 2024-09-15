@@ -3,6 +3,7 @@ import company from "src/data/company.json";
 import { FC } from "react";
 import FlexBox from "../../utils/box/styled-box";
 import { SearchDomain } from "../search-domain/search-domain";
+import { useNavigate } from "react-router-dom";
 
 interface IntroductionSectionInterface {
   sx?: object;
@@ -50,6 +51,10 @@ export const IntroCard = () => {
 };
 
 const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
+  const navigate = useNavigate();
+  const navigateToDomainSearch = () => {
+    navigate("domain/search");
+  };
   return (
     <FlexBox
       component="div"
@@ -74,7 +79,7 @@ const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
         </Typography>
       </Stack>
       <Stack spacing={1} sx={{ width: "100%" }} maxWidth="900px">
-        <SearchDomain />
+        <SearchDomain handleClick={navigateToDomainSearch} />
       </Stack>
     </FlexBox>
   );

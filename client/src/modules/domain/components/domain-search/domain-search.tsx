@@ -25,12 +25,6 @@ export const DomainSearch: FC = () => {
     return !domainDetails?.data?.registered; // since if domain is already registered i:e value is true then it should not be available
   };
 
-  // if (loading) {
-  //   setShowLoader(true);
-  // }
-
-  console.log("The loading,loading", loading);
-
   useEffect(() => {
     if (queryDomain) dispatch(domainActions.fetchDomainDetails(queryDomain));
   }, [queryDomain]);
@@ -67,17 +61,19 @@ export const DomainSearch: FC = () => {
       </FlexBox>
       <Stack width="95%" direction="row" gap={10} p={3} maxWidth="1100px">
         <FilterSection />
-        <Stack flex={1}>
-          {isDomainAvailable() && queryDomain && (
-            <Available content={`Domain(${queryDomain}) is available.`} />
-          )}
+        {!loading && (
+          <Stack flex={1}>
+            {isDomainAvailable() && queryDomain && (
+              <Available content={`Domain(${queryDomain}) is available.`} />
+            )}
 
-          {!isDomainAvailable() && queryDomain && (
-            <NotAvailable
-              content={`Domain(${queryDomain}) is not available.`}
-            />
-          )}
-        </Stack>
+            {!isDomainAvailable() && queryDomain && (
+              <NotAvailable
+                content={`Domain(${queryDomain}) is not available.`}
+              />
+            )}
+          </Stack>
+        )}
       </Stack>
       {/* {showLoader && <BlurLoader />} */}
     </FlexBox>
