@@ -116,10 +116,6 @@ export const FilterSection = () => {
       name: ".website",
       label: ".website",
     },
-    {
-      name: ".biz",
-      label: ".biz",
-    },
   ];
   return (
     <Stack spacing={2}>
