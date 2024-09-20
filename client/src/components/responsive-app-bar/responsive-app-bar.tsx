@@ -32,7 +32,7 @@ export const ResponsiveAppBar: FC = () => {
       position="relative"
       sx={{
         backgroundColor: "text.primary",
-        boxShadow: "none",
+        boxShadow: "1px 1px 5px grey !important",
         px: "3rem",
       }}
     >

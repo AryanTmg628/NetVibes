@@ -7,26 +7,30 @@ import company from "../../../data/company.json";
 import FlexBox from "../../../utils/box/styled-box";
 import { CustomButton } from "../../../components/common/custom-button/custom-button";
 import { VerficationDialog } from "../../../modals/auth/verification-dialog";
+import { ResponsiveAppBar } from "../../../components/responsive-app-bar/responsive-app-bar";
 
 export const RegisterView: FC = () => {
   return (
-    <Grid container height="100vh">
-      <Grid
-        item
-        xs={5}
-        justifyContent="center"
-        sx={{
-          display: { md: "flex", sm: "flex", xs: "none" },
-        }}
-        alignItems="center"
-      >
-        <AboutUsView />
+    <Stack>
+      <ResponsiveAppBar />
+      <Grid container height="100vh">
+        <Grid
+          item
+          xs={5}
+          justifyContent="center"
+          sx={{
+            display: { md: "flex", sm: "flex", xs: "none" },
+          }}
+          alignItems="center"
+        >
+          <AboutUsView />
+        </Grid>
+        <Grid item xs={12} md={6.5} sm={6.5}>
+          <RegisterForm />
+        </Grid>
+        {/* <VerficationDialog /> */}
       </Grid>
-      <Grid item xs={12} md={6.5} sm={6.5}>
-        <RegisterForm />
-      </Grid>
-      {/* <VerficationDialog /> */}
-    </Grid>
+    </Stack>
   );
 };
 
@@ -35,6 +39,7 @@ const AboutUsView = () => {
     <FlexBox flexDirection="column" alignItems="center" gap={3}>
       <Iconify
         icon="solar:map-arrow-down-bold"
+        color="primary.light"
         width="4rem"
         sx={{
           animation: "Bounce 5s cubic-bezier(0.42,0,0.58,1) infinite",
@@ -54,12 +59,14 @@ const AboutUsView = () => {
           },
         }}
       />
-      <Typography variant="h3">Join Us </Typography>
-      <Typography variant="h6" color="text.black" textAlign="center">
+      <Typography variant="h3" color="primary.dark">
+        Join Us{" "}
+      </Typography>
+      <Typography variant="h6" color="custom.grey.200" textAlign="center">
         Subscribe {company?.name} to use our hosting and domain services.{" "}
       </Typography>
 
-      <Typography variant="h6" color="text.black" textAlign="center">
+      <Typography variant="h6" color="custom.grey.200" textAlign="center">
         If you want to know more about us, our all details can be found on our
         webpage.
       </Typography>
