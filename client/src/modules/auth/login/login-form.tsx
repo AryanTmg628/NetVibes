@@ -103,7 +103,7 @@ export const LoginForm = () => {
           <Box component="span">
             <Link
               href="/auth/register"
-              color="text.black"
+              color="primary.light"
               fontWeight="bold"
               marginX={1}
             >

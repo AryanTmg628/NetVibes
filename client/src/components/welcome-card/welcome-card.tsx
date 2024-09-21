@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import { keyframes } from "@mui/material";
 const StyledCard = styled(Card)(({ theme }) => ({
   minWidth: "350px",
-  backgroundColor: theme.palette.text.black,
+  backgroundColor: theme.palette.primary.dark,
   boxSizing: "border-box",
   borderTopLeftRadius: "1rem",
   borderBottomLeftRadius: "1rem",

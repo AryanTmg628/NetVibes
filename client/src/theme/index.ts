@@ -14,10 +14,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "capitalize",
-          backgroundColor: palette.text.black,
+          backgroundColor: palette.primary.light,
           color: palette.text.primary,
           "&:hover": {
-            backgroundColor: palette.text.black,
+            backgroundColor: palette.primary.light,
             color: palette.text.primary,
           },
         },

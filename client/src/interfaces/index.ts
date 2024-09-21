@@ -23,7 +23,7 @@ export interface CustomButtonInterface {
   value?: string;
   color?: string;
   sx?: any;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export interface ImageComponentInterface {

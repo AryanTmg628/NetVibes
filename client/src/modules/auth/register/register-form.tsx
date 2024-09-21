@@ -132,7 +132,7 @@ export const RegisterForm = () => {
       width={1}
     >
       <Stack spacing={2} width="95%">
-        <Typography variant="h5" color="text.black" textAlign="center">
+        <Typography variant="h5" color="primary.light" textAlign="center">
           Register Here
         </Typography>
         <LinearAlternativeLabel
@@ -147,7 +147,7 @@ export const RegisterForm = () => {
             <Box component="span">
               <Link
                 href="/auth/login"
-                color="text.black"
+                color="primary.light"
                 fontWeight="bold"
                 marginX={1}
               >
@@ -185,11 +185,11 @@ const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
               <StepLabel
                 sx={{
                   "& .MuiStepLabel-label, & .Mui-active": {
-                    color: `${theme?.palette?.text?.black} !important`,
+                    color: `${theme?.palette?.primary?.light} !important`,
                   },
 
                   "& .Mui-completed": {
-                    color: `${theme?.palette?.text?.black} !important`,
+                    color: `${theme?.palette?.primary?.light} !important`,
 
                     "& .MuiStepLabel-label": {
                       color: "#ffffff !important",

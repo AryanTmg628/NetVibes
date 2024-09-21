@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   queryDomain: null,
   domainDetails: null,
+  tldsList: [],
 };
 
 export const domainSlice = createSlice({
@@ -26,6 +27,19 @@ export const domainSlice = createSlice({
     },
     setQueryDomain(state, action) {
       state.queryDomain = action?.payload;
+    },
+    fetchTLDLists(state) {
+      state.loading = true;
+    },
+    TLDsListSucceed(state, action) {
+      state.error = false;
+      state.loading = false;
+      state.tldsList = action?.payload;
+    },
+    TLDsListFailed(state, action) {
+      state.error = action?.payload;
+      state.loading = false;
+      state.tldsList = [];
     },
   },
 });
