@@ -31,43 +31,50 @@ export const SearchDomain: FC<{ handleClick: () => void }> = ({
 
   return (
     <FormProvider {...methods}>
-      <Stack direction="row" marginTop="2rem">
-        <CustomTextField
-          name="domainName"
-          placeholder="Search Your Domain"
-          sx={{
-            backgroundColor: "text.primary",
-            borderRadiius: "1rem",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "text.primary",
+      <form onSubmit={onSubmit}>
+        <Stack direction="row" marginTop="2rem">
+          <CustomTextField
+            name="domainName"
+            placeholder="Search Your Domain"
+            sx={{
+              backgroundColor: "text.primary",
+              borderRadiius: "1rem",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "text.primary",
+                },
+                "&:hover fieldset": {
+                  borderColor: "text.primary",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "text.primary",
+                },
               },
-              "&:hover fieldset": {
-                borderColor: "text.primary",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "text.primary",
-              },
-            },
-          }}
-        />
-        <LoadingButton
-          sx={{
-            backgroundColor: "primary.light",
-            p: "0rem 1rem",
-            "&:hover": {
+            }}
+          />
+          <LoadingButton
+            sx={{
+              color: "white",
               backgroundColor: "primary.light",
-            },
-          }}
-          loading={loading}
-          onClick={onSubmit}
-        >
-          <Iconify icon="ic:outline-search" width={30} />
-          <Typography variant="body2" sx={{ ml: "0.2rem" }}>
-            Search
-          </Typography>
-        </LoadingButton>
-      </Stack>
+              p: "0rem 1rem",
+              "&:hover": {
+                backgroundColor: "primary.light",
+              },
+
+              "& .MuiLoadingButton-loadingIndicator": {
+                color: "text.primary",
+              },
+            }}
+            loading={loading}
+            onClick={onSubmit}
+          >
+            <Iconify icon="ic:outline-search" width={30} />
+            <Typography variant="body2" sx={{ ml: "0.2rem" }}>
+              Search
+            </Typography>
+          </LoadingButton>
+        </Stack>
+      </form>
     </FormProvider>
   );
 };
