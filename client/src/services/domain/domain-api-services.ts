@@ -7,4 +7,8 @@ export const domainApiServices = {
     };
     return api.get("domain/", { params });
   },
+
+  getTLDsLIst: () => {
+    return api.get("tlds/");
+  },
 };
