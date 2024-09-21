@@ -22,7 +22,7 @@ import {
 import { ContentCollapse } from "../common/content-collapse/content-collapse";
 import { useNavigate } from "react-router-dom";
 
-export const ResponsiveAppBar: FC = () => {
+export const ResponsiveAppBar: FC<{ sx: any }> = ({ sx }) => {
   const navigate = useNavigate();
   const handleClick = (path: string) => {
     navigate(`/${path}`);
@@ -32,8 +32,9 @@ export const ResponsiveAppBar: FC = () => {
       position="relative"
       sx={{
         backgroundColor: "text.primary",
-        boxShadow: "1px 1px 5px grey !important",
+        boxShadow: "1px 1px 5px grey ",
         px: "3rem",
+        ...sx,
       }}
     >
       <Toolbar disableGutters>
