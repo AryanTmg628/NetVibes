@@ -11,7 +11,11 @@ export const LandingPage = () => {
   return (
     <Stack spacing={3}>
       <TopBar />
-      <ResponsiveAppBar />
+      <ResponsiveAppBar
+        sx={{
+          boxShadow: "none !important",
+        }}
+      />
       <IntroCard />
       <FeaturesSection />
       <CommunicateChannel />
