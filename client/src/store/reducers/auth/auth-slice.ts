@@ -5,6 +5,7 @@ const initialState = {
   error: null,
   success: null,
   currentUser: {},
+  isLoggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -50,11 +51,13 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = action?.payload;
+      state.isLoggedIn = true;
     },
     loginUserFailed(state, action) {
       state.loading = false;
       state.success = null;
       state.error = action?.payload;
+      state.isLoggedIn = false;
     },
     setCurrentUser(state, action) {
       state.currentUser = action?.payload;
