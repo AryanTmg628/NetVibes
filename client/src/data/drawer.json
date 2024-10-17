@@ -1,0 +1,50 @@
+{
+  "features": [
+    {
+      "name": "Home",
+      "redirect": "home",
+      "icon": "typcn:home"
+    },
+    {
+      "name": "Account Details",
+      "redirect": "home",
+      "icon": "mdi:account-cowboy-hat",
+      "subcontent": [
+        {
+          "name": "Edit account details",
+          "redirect": "edit-account-details",
+          "icon": "fluent:box-edit-24-regular"
+        },
+
+        {
+          "name": "Change password",
+          "redirect": "change-password",
+          "icon": "mdi:key-change"
+        }
+      ]
+    },
+    {
+      "name": "Domains",
+      "redirect": "home",
+      "icon": "gridicons:domains",
+      "subcontent": [
+        {
+          "name": "Register domain",
+          "redirect": "home",
+          "icon": "fluent-emoji-high-contrast:registered"
+        },
+
+        {
+          "name": "Transfer domain",
+          "redirect": "home",
+          "icon": "tabler:transfer"
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "redirect": "home",
+      "icon": "solar:logout-outline"
+    }
+  ]
+}

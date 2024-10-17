@@ -12,6 +12,7 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
   subContent = null,
   plus = "ic-round-add",
   minus = "ph-minus-bold",
+  showBorder = true,
   handleClick,
 }) => {
   const [isCollpase, setIsCollapse] = useState(false);
@@ -21,7 +22,7 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
   };
   return (
     <Box
-      borderBottom="1px solid"
+      borderBottom={showBorder ? "1px solid" : "none"}
       borderColor="custom.grey.500"
       paddingBottom={1}
     >
@@ -47,17 +48,30 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
       <Collapse in={isCollpase}>
         {Array.isArray(subContent) ? (
           subContent?.map((sub: MenuSubContentInterface, index: number) => (
-            <Typography
-              key={index}
-              variant="body1"
-              color="custom.grey.200"
-              padding={1}
-              onClick={() => {
-                if (handleClick) handleClick(sub?.redirect);
+            <Stack
+              direction="row"
+              alignItems="center"
+              paddingLeft={1}
+              marginTop={1}
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
               }}
+              onClick={() => {
+                  if (handleClick) handleClick(sub?.redirect);
+                }}
             >
-              {sub?.name}
-            </Typography>
+              {sub.icon && <Iconify icon={sub.icon} color="custom.grey.500" />}
+              <Typography
+                key={index}
+                variant="body1"
+                color="custom.grey.200"
+                padding={1}
+              >
+                {sub?.name}
+              </Typography>
+            </Stack>
           ))
         ) : (
           <Typography variant="body1" color="custom.grey.200" padding={1}>

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface SingleMenuInterface {
   name: string;
   redirect?: string;
@@ -23,6 +25,7 @@ export interface CustomButtonInterface {
   value?: string;
   color?: string;
   sx?: any;
+  type?: string;
   onClick?: () => void;
 }
 
@@ -40,10 +43,11 @@ export interface CardInfoInterface {
 }
 
 export interface ContentCollapseInterface {
-  title: string;
+  title: string | ReactNode;
   subContent?: string | Array<any>;
   plus?: string;
   minus?: string;
+  showBorder?: boolean;
   handleClick?: (path: string) => void;
 }
 

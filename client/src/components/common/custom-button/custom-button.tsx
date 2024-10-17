@@ -8,6 +8,7 @@ export const CustomButton: FC<CustomButtonInterface> = ({
   color,
   sx,
   onClick,
+  type,
 }) => {
   return (
     <Button
@@ -22,6 +23,7 @@ export const CustomButton: FC<CustomButtonInterface> = ({
         },
         ...sx,
       }}
+      type={type || "button"}
       onClick={onClick}
     >
       {value}
