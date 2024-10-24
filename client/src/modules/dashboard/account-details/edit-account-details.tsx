@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { FormProvider, useForm } from "react-hook-form";
 import { CustomFormProvider } from "../../../components/hook-form/form-provider/form-provider";
 import { CustomButton } from "../../../components/common/custom-button/custom-button";
+import { useEffect } from "react";
 
 export const EditAccountDetails = () => {
   return (
@@ -26,11 +27,20 @@ const AccountDetailsForm = () => {
     last_name: "",
     email: "",
     username: "",
+    country: "",
+    city: "",
+    state: "",
+    street_adress: "",
+    phone_number: "",
   };
 
   const methods = useForm({
     defaultValues,
   });
+
+  useEffect(() => {
+    methods.reset(currentUser);
+  }, []);
 
   return (
     <CustomFormProvider methods={methods}>
@@ -56,5 +66,4 @@ const AccountDetailsForm = () => {
       </Stack>
     </CustomFormProvider>
   );
-
 };

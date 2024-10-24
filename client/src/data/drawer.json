@@ -30,7 +30,7 @@
       "subcontent": [
         {
           "name": "Register domain",
-          "redirect": "home",
+          "redirect": "register-domain",
           "icon": "fluent-emoji-high-contrast:registered"
         },
 

@@ -15,12 +15,14 @@ import { jwtDecode } from "jwt-decode";
 import { CustomPasswordField } from "../../../components/hook-form/custom-password-field";
 
 import InputAdornment from "@mui/material/InputAdornment";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
   // local state
 
   const [apiCalled, setApiCalled] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   // store state
 
@@ -47,6 +49,7 @@ export const LoginForm = () => {
     const decoded = jwtDecode(token);
     dispatch(authActions.setCurrentUser(decoded));
     showSuccessToast(success?.message);
+    navigate('/dashboard');
     setApiCalled(false);
   }
 
