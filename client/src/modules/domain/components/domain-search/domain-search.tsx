@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import FlexBox from "../../../../utils/box/styled-box";
-import { Stack, Typography, Box } from "@mui/material";
+import { Stack, Typography, Box, Tooltip } from "@mui/material";
 import { SearchDomain } from "../../../../components/search-domain/search-domain";
 import { useDispatch, useSelector } from "react-redux";
 import { domainActions } from "../../../../store/actions/domain/domainActions";
@@ -13,6 +13,8 @@ import { getDomainDetails } from "../../../../store/selectors";
 import BlurLoader from "../../../../components/common/blur-loader/blur-loader";
 import { useTheme } from "@emotion/react";
 import { TLDDetailInterface } from "../../../../interfaces";
+import Iconify from "../../../../components/common/iconify/iconify";
+import { useRouter } from "../../../../hooks/use-router/use-router";
 
 export const DomainSearch: FC = () => {
   const dispatch = useDispatch();
@@ -64,7 +66,7 @@ export const DomainSearch: FC = () => {
         </FlexBox>
       </FlexBox>
       <Stack width="95%" direction="row" gap={10} p={3} maxWidth="1100px">
-        <FilterSection />
+        {/* <FilterSection /> */}
         {!loading && (
           <Stack flex={1}>
             {isDomainAvailable() && queryDomain && (
@@ -181,8 +183,13 @@ const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
   const getDomainName = () => {
     return queryDomain.split(".")[0];
   };
+  const router = useRouter();
 
   const getCurrency = () => import.meta.env.VITE_CURRENCY;
+
+  const handleBuy = () => {
+    router.push("/dashboard/register-domain/buy");
+  };
   return (
     <FlexBox
       justifyContent="space-between"
@@ -212,11 +219,17 @@ const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
           </Typography>
         </Typography>
       </Box>
-      <CustomButton
-        bgColor="primary.light"
-        color="text.primary"
-        value="Add to Cart"
-      />
+      <FlexBox gap={1}>
+        <Tooltip title="Add to cart">
+          <Iconify icon="fa6-solid:cart-plus" color="primary.light" />
+        </Tooltip>
+        <CustomButton
+          bgColor="primary.light"
+          color="text.primary"
+          value="Buy"
+          onClick={handleBuy}
+        />
+      </FlexBox>
     </FlexBox>
   );
 };

@@ -28,6 +28,9 @@ export const domainSlice = createSlice({
     setQueryDomain(state, action) {
       state.queryDomain = action?.payload;
     },
+    resetQueryDomain(state) {
+      state.queryDomain = null;
+    },
     fetchTLDLists(state) {
       state.loading = true;
     },

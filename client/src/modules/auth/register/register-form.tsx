@@ -140,6 +140,7 @@ export const RegisterForm = () => {
           activeStep={activeStep}
           handleNext={handleNext}
           handleBack={handleBack}
+          steps={steps}
         />
         <Stack>
           <Typography variant="body2">
@@ -168,11 +169,12 @@ export const RegisterForm = () => {
   );
 };
 
-const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
+export const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
   getCurrentForm,
   activeStep,
   handleNext,
   handleBack,
+  steps,
 }) => {
   const theme = useTheme();
 

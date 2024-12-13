@@ -1,9 +1,12 @@
 import { Card, CardMedia, Typography, Stack } from "@mui/material";
 import company from "src/data/company.json";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import FlexBox from "../../utils/box/styled-box";
 import { SearchDomain } from "../search-domain/search-domain";
 import { useNavigate } from "react-router-dom";
+import { getDomainDetails } from "../../store/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { domainActions } from "../../store/actions/domain/domainActions";
 
 interface IntroductionSectionInterface {
   sx?: object;
@@ -55,6 +58,11 @@ const IntroductionSection: FC<IntroductionSectionInterface> = ({ sx }) => {
   const navigateToDomainSearch = () => {
     navigate("domain/search");
   };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(domainActions.resetQueryDomain());
+  }, []);
   return (
     <FlexBox
       component="div"

@@ -138,7 +138,7 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
     navigate(`/${path}`);
   };
   return (
-    <FlexBox alignItems="center">
+    <FlexBox alignItems="center" gap={1}>
       <HoverTypography
         variant="body2"
         color="text.black"
@@ -148,6 +148,7 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
       >
         {name}
       </HoverTypography>
+
       <Iconify
         icon="mdi-light:chevron-down"
         color="text.black"

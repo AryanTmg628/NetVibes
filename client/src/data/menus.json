@@ -3,52 +3,64 @@
     {
       "name": "Home",
       "subcontent": [
-        { "name": "Home Images", "redirect": "about-us" },
-        { "name": "Home Domain Search ", "redirect": "about-us" }
+        {
+          "name": "Home Images",
+          "redirect": "about-us",
+          "icon": "lineicons:gallery"
+        },
+        {
+          "name": "Home Domain Search ",
+          "redirect": "about-us",
+          "icon": "mdi:search-web"
+        }
       ]
     },
     {
       "name": "Pages",
       "subcontent": [
-        { "name": "About us", "redirect": "about-us" },
-        { "name": "Our Services", "redirect": "about-us" },
-        { "name": "Client Reviews", "redirect": "about-us" },
-        { "name": "Pricing", "redirect": "pricing" },
-        { "name": "Image Gallery", "redirect": "image-gallery" },
-        { "name": "Login", "redirect": "auth/login" },
-        { "name": "Register", "redirect": "auth/register" }
+        {
+          "name": "About us",
+          "redirect": "about-us",
+          "icon": "codicon:organization"
+        },
+        {
+          "name": "Our Services",
+          "redirect": "about-us",
+          "icon": "medical-icon:i-social-services"
+        },
+        {
+          "name": "Client Reviews",
+          "redirect": "about-us",
+          "icon": "material-symbols-light:reviews-outline"
+        },
+        { "name": "Pricing", "redirect": "pricing", "icon": "tdesign:money" },
+        {
+          "name": "Login",
+          "redirect": "auth/login",
+          "icon": "ri:login-circle-line"
+        },
+        {
+          "name": "Register",
+          "redirect": "auth/register",
+          "icon": "mdi:register-outline"
+        }
       ]
     },
 
     {
       "name": "Domain",
       "subcontent": [
-        { "name": "Domain Search", "redirect": "domain/search" },
-        { "name": "Register Domain", "redirect": "domain/register" },
-        { "name": "Transfer Domain", "redirect": "domain/transfer" },
-        { "name": "Renew Domain", "redirect": "domain/renew" }
-      ]
-    },
-    {
-      "name": "Hosting",
-      "subcontent": [
         {
-          "name": "Shared Hosting",
-          "redirect": "about-us",
-          "icon": "uil:server",
-          "description": "Innovate reliable quality"
+          "name": "Domain Search",
+          "redirect": "domain/search",
+          "icon": "mdi:search-web",
+          "description": "Search the availability of a domain"
         },
         {
-          "name": "VPS Hosting",
-          "redirect": "about-us",
-          "icon": "icon-park-outline:code-computer",
-          "description": "Efficiently maintained."
-        },
-        {
-          "name": "Website Hosting",
-          "redirect": "about-us",
-          "icon": "clarity:host-group-solid",
-          "description": "Efficiently maintained."
+          "name": "Register Domain",
+          "redirect": "domain/register",
+          "icon": "ic:baseline-domain-verification",
+          "description": "Register your domain in the internet"
         }
       ]
     },

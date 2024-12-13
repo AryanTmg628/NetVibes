@@ -78,4 +78,5 @@ export interface LinearAlternativeInterface {
   activeStep: number;
   handleNext: () => void;
   handleBack: () => void;
+  steps: Array<string>;
 }

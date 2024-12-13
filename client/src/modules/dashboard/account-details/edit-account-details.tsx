@@ -30,7 +30,7 @@ const AccountDetailsForm = () => {
     country: "",
     city: "",
     state: "",
-    street_adress: "",
+    street_address: "",
     phone_number: "",
   };
 
