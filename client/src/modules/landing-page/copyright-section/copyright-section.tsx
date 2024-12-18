@@ -13,10 +13,6 @@ export const CopyRight: FC = () => {
           &copy; Copyrights @2024. All rights reserved by
           <Link>Aryan Tamang.</Link>
         </Typography>
-        <FlexBox aria-label="payments-party">
-          <ImageComponent src={esewaLogo} width="100px" />
-          <ImageComponent src={khalti} width="100px" />
-        </FlexBox>
       </FlexBox>
     </FlexBox>
   );

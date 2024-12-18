@@ -6,6 +6,7 @@ import { FeaturesSection } from "../../modules/landing-page/features-section";
 import { CommunicateChannel } from "../../components/communicate-channel/communicate-channel";
 import { FAQ } from "../../components/faq/faq";
 import { CopyRight } from "../../modules/landing-page/copyright-section/copyright-section";
+import { LandingFooter } from "../../modules/landing-page/landing-footer/landing-footer";
 
 export const LandingPage = () => {
   return (
@@ -20,7 +21,7 @@ export const LandingPage = () => {
       <FeaturesSection />
       <CommunicateChannel />
       <FAQ />
-      <CopyRight />
+      <LandingFooter />
     </Stack>
   );
 };

@@ -216,9 +216,11 @@ export const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
             </Button>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Button variant="contained" onClick={handleNext}>
-            {activeStep === steps.length - 1 ? "Register" : "Next"}
-          </Button>
+          {activeStep < 2 && (
+            <Button variant="contained" onClick={handleNext}>
+              {activeStep === steps.length - 1 ? "Register" : "Next"}
+            </Button>
+          )}
         </Box>
       </>
     </>

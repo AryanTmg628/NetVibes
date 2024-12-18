@@ -32,12 +32,6 @@
           "name": "Register domain",
           "redirect": "register-domain",
           "icon": "fluent-emoji-high-contrast:registered"
-        },
-
-        {
-          "name": "Transfer domain",
-          "redirect": "home",
-          "icon": "tabler:transfer"
         }
       ]
     },

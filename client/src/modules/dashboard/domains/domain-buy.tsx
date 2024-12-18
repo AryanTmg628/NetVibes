@@ -1,4 +1,5 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Tooltip, Typography } from "@mui/material";
+import { useKhalti } from "../../../hooks/use-khalti/use-khalti";
 import { LinearAlternativeLabel } from "../../auth/register/register-form";
 import { Fragment, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -10,12 +11,21 @@ import { getAuthDetails } from "../../../store/selectors";
 import { useSelector } from "react-redux";
 import domainSchemas from "./schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Payment } from "@mui/icons-material";
+import { ImageComponent } from "../../../components/common/image-component/image-component";
+import khaltiLogo from "../../../assets/images/khalti-logo.svg";
+import { useNavigate } from "react-router-dom";
+import BlurLoader from "../../../components/common/blur-loader/blur-loader";
 
 export const DomainBuy = () => {
-  const steps = ["Personal Information", "DNS Configuration"];
+  const steps = ["Personal Information", "DNS Configuration", "Payment"];
   const [activeStep, setActiveStep] = useState(0);
 
-  const allSteps = [<CredentialsForm />, <DNSConfigurationForm />];
+  const allSteps = [
+    <CredentialsForm />,
+    <DNSConfigurationForm />,
+    <PaymentSection />,
+  ];
 
   const getForm = () => allSteps[activeStep];
 
@@ -157,5 +167,73 @@ const DNSConfigurationForm = () => {
         </FlexBox>
       </Stack>
     </CustomFormProvider>
+  );
+};
+
+const PaymentSection = () => {
+  const product = { price: 1, id: 1, name: "" };
+  const navigate = useNavigate();
+
+  const { initiate, initiationError, isLoading } = useKhalti({
+    onSuccess: (response) => {
+      // Navigate to success page with payment details
+      navigate(`/success`, { state: { product, response } });
+    },
+    onError: (error) => {
+      console.error("Payment error:", error.message);
+    },
+  });
+
+  const handlePayment = () => {
+    if (product) {
+      const paymentRequest = {
+        amount: product.price * 100, // Convert NPR to paisa
+        purchase_order_id: `order-${product.id}`,
+        purchase_order_name: product.name,
+        return_url: "http://localhost:80/success",
+        website_url: "http://localhost:80",
+      };
+      initiate(paymentRequest);
+    }
+  };
+  return (
+    <FlexBox
+      justifyContent="center"
+      paddingTop={5}
+      flexDirection="column"
+      alignItems="center"
+      gap={2}
+    >
+      {isLoading && <BlurLoader />}
+      {initiationError && (
+        <Typography variant="body1">
+          Error: {initiationError.message}
+        </Typography>
+      )}
+      <FlexBox
+        flexDirection="column"
+        gap={1}
+        sx={{
+          width: "500px",
+          borderRadius: "0.6rem",
+          padding: "1rem",
+          boxShadow: "2px 2px 5px #727272",
+        }}
+      >
+        <Typography variant="body2">Choose Payment Method </Typography>
+        <Typography variant="body1" color="custom.grey.500">
+          Select your prefered payment option{" "}
+        </Typography>
+        <FlexBox alignItems="center" gap={1} mt={3} onClick={handlePayment}>
+          <Tooltip title="Pay with Khalti" arrow>
+            <ImageComponent
+              src={khaltiLogo}
+              width="100px"
+              cursorPointer={true}
+            />
+          </Tooltip>
+        </FlexBox>
+      </FlexBox>
+    </FlexBox>
   );
 };

@@ -34,6 +34,7 @@ export interface ImageComponentInterface {
   alt?: string;
   width?: string | number;
   height?: string | number;
+  cursorPointer?: boolean;
 }
 
 export interface CardInfoInterface {

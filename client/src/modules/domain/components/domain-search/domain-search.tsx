@@ -220,9 +220,9 @@ const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
         </Typography>
       </Box>
       <FlexBox gap={1}>
-        <Tooltip title="Add to cart">
-          <Iconify icon="fa6-solid:cart-plus" color="primary.light" />
-        </Tooltip>
+        {/* <Tooltip title="Add to cart"> */}
+        {/*   <Iconify icon="fa6-solid:cart-plus" color="primary.light" /> */}
+        {/* </Tooltip> */}
         <CustomButton
           bgColor="primary.light"
           color="text.primary"

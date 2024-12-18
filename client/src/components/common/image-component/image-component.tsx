@@ -7,13 +7,18 @@ export const ImageComponent: FC<ImageComponentInterface> = ({
   alt,
   width = "100%",
   height = "auto",
+  cursorPointer = "false",
 }) => {
   return (
     <Box
       component="img"
       src={src}
       alt={alt}
-      sx={{ width: width, height: height }}
+      sx={{
+        width: width,
+        height: height,
+        cursor: `${cursorPointer ? "pointer" : ""}`,
+      }}
     />
   );
 };
