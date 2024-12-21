@@ -2,12 +2,11 @@
   "features": [
     {
       "name": "Home",
-      "redirect": "home",
+      "redirect": "/dashboard",
       "icon": "typcn:home"
     },
     {
       "name": "Account Details",
-      "redirect": "home",
       "icon": "mdi:account-cowboy-hat",
       "subcontent": [
         {
@@ -25,7 +24,6 @@
     },
     {
       "name": "Domains",
-      "redirect": "home",
       "icon": "gridicons:domains",
       "subcontent": [
         {
@@ -37,7 +35,7 @@
     },
     {
       "name": "Logout",
-      "redirect": "home",
+      "redirect": "/auth/logout",
       "icon": "solar:logout-outline"
     }
   ]

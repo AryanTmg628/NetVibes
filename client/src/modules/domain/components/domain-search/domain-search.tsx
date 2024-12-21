@@ -32,8 +32,8 @@ export const DomainSearch: FC = () => {
   useEffect(() => {
     if (queryDomain) dispatch(domainActions.fetchDomainDetails(queryDomain));
 
-    if (tldsList.length === 0) dispatch(domainActions.fetchTLDLists());
-  }, [queryDomain, tldsList]);
+    dispatch(domainActions.fetchTLDLists());
+  }, [queryDomain]);
   return (
     <FlexBox gap={2} flexDirection="column" alignItems="center">
       <FlexBox
@@ -75,6 +75,7 @@ export const DomainSearch: FC = () => {
                 <MoreDomainOptions
                   queryDomain={queryDomain}
                   tldsList={tldsList}
+                  is_available={true}
                 />
               </>
             )}
@@ -87,6 +88,7 @@ export const DomainSearch: FC = () => {
                 <MoreDomainOptions
                   queryDomain={queryDomain}
                   tldsList={tldsList}
+                  is_available={false}
                 />
               </>
             )}
@@ -156,8 +158,8 @@ export const FilterSection = () => {
 const MoreDomainOptions: FC<{
   queryDomain: string;
   tldsList: Array<TLDDetailInterface>;
-}> = ({ queryDomain, tldsList }) => {
-  console.log("tlds list", tldsList);
+  is_available: boolean;
+}> = ({ queryDomain, tldsList, is_available }) => {
   return (
     <Stack spacing={2} my={3}>
       <Typography variant="h6" color="text.black" textAlign="center">
@@ -169,6 +171,7 @@ const MoreDomainOptions: FC<{
             queryDomain={queryDomain}
             tldDetail={detail}
             key={detail.id}
+            is_available={is_available}
           />
         ))}
       </Stack>
@@ -176,10 +179,12 @@ const MoreDomainOptions: FC<{
   );
 };
 
-const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
-  queryDomain,
-  tldDetail,
-}) => {
+const TLDDetail: FC<{
+  queryDomain: string;
+  tldDetail: TLDDetailInterface;
+  is_available: boolean;
+}> = ({ queryDomain, tldDetail, is_available }) => {
+  const [showDetail, setShowDetail] = useState(false);
   const getDomainName = () => {
     return queryDomain.split(".")[0];
   };
@@ -188,8 +193,26 @@ const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
   const getCurrency = () => import.meta.env.VITE_CURRENCY;
 
   const handleBuy = () => {
-    router.push("/dashboard/register-domain/buy");
+    router.push(
+      `/dashboard/register-domain/buy?name=${getDomainName()}&tld=${tldDetail.name}`,
+    );
   };
+  const isSameTLD = () => {
+    if (is_available) {
+      setShowDetail(true);
+      return;
+    }
+    const tld = queryDomain.split(".")[1];
+    if (tldDetail.name === tld) {
+      setShowDetail(false);
+    } else {
+      setShowDetail(true);
+    }
+  };
+
+  useEffect(() => {
+    isSameTLD();
+  }, []);
   return (
     <FlexBox
       justifyContent="space-between"
@@ -203,33 +226,37 @@ const TLDDetail: FC<{ queryDomain: string; tldDetail: TLDDetailInterface }> = ({
         },
       }}
     >
-      <Box>
-        <Typography variant="body2">
-          {getDomainName()}.
-          <Typography component="span" color="primary.main">
-            {tldDetail.name}
-          </Typography>
-        </Typography>
-      </Box>
-      <Box>
-        <Typography variant="h6" color="primary.light">
-          {getCurrency() + " " + tldDetail.price_pm}
-          <Typography component="span" color="custom.grey.500">
-            /month
-          </Typography>
-        </Typography>
-      </Box>
-      <FlexBox gap={1}>
-        {/* <Tooltip title="Add to cart"> */}
-        {/*   <Iconify icon="fa6-solid:cart-plus" color="primary.light" /> */}
-        {/* </Tooltip> */}
-        <CustomButton
-          bgColor="primary.light"
-          color="text.primary"
-          value="Buy"
-          onClick={handleBuy}
-        />
-      </FlexBox>
+      {showDetail && (
+        <>
+          <Box>
+            <Typography variant="body2">
+              {getDomainName()}.
+              <Typography component="span" color="primary.main">
+                {tldDetail.name}
+              </Typography>
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="h6" color="primary.light">
+              {getCurrency() + " " + tldDetail.price_pm}
+              <Typography component="span" color="custom.grey.500">
+                /month
+              </Typography>
+            </Typography>
+          </Box>
+          <FlexBox gap={1}>
+            {/* <Tooltip title="Add to cart"> */}
+            {/*   <Iconify icon="fa6-solid:cart-plus" color="primary.light" /> */}
+            {/* </Tooltip> */}
+            <CustomButton
+              bgColor="primary.light"
+              color="text.primary"
+              value="Buy"
+              onClick={handleBuy}
+            />
+          </FlexBox>
+        </>
+      )}
     </FlexBox>
   );
 };

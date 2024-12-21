@@ -6,6 +6,7 @@ const initialState = {
   queryDomain: null,
   domainDetails: null,
   tldsList: [],
+  registerDomainDetails: null,
 };
 
 export const domainSlice = createSlice({
@@ -43,6 +44,9 @@ export const domainSlice = createSlice({
       state.error = action?.payload;
       state.loading = false;
       state.tldsList = [];
+    },
+    setRegisterDomainDetails(state, action) {
+      state.registerDomainDetails = action?.payload;
     },
   },
 });

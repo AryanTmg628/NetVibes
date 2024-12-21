@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import FlexBox from "../../utils/box/styled-box";
@@ -6,6 +6,7 @@ import HoverTypography from "../../utils/typography/styled-typography";
 import Iconify from "../common/iconify/iconify";
 import company from "/src/data/company.json";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -22,6 +23,7 @@ export const TopBar: FC = () => {
   const changePath = (path: string) => {
     redirect(`/${path}`);
   };
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
   const renderTechnicalSupport = (
     <CustomBox alignItems="center">
       <Iconify
@@ -59,17 +61,27 @@ export const TopBar: FC = () => {
       </CustomBox>
     </Stack>
   );
+
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    if (token) setIsAuthenticate(true);
+    else setIsAuthenticate(false);
+  }, []);
   return (
-    <FlexBox
-      justifyContent="space-between"
-      alignItems="center"
-      bgcolor="custom.grey.100"
-      paddingX="3rem"
-      paddingY="1rem"
-      sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-    >
-      {renderTechnicalSupport}
-      {renderAuthentication}
-    </FlexBox>
+    <>
+      {!isAuthenticate && (
+        <FlexBox
+          justifyContent="space-between"
+          alignItems="center"
+          bgcolor="custom.grey.100"
+          paddingX="3rem"
+          paddingY="1rem"
+          sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+        >
+          {renderTechnicalSupport}
+          {renderAuthentication}
+        </FlexBox>
+      )}
+    </>
   );
 };

@@ -2,18 +2,7 @@
   "menus": [
     {
       "name": "Home",
-      "subcontent": [
-        {
-          "name": "Home Images",
-          "redirect": "about-us",
-          "icon": "lineicons:gallery"
-        },
-        {
-          "name": "Home Domain Search ",
-          "redirect": "about-us",
-          "icon": "mdi:search-web"
-        }
-      ]
+      "redirect": "/"
     },
     {
       "name": "Pages",
@@ -23,17 +12,6 @@
           "redirect": "about-us",
           "icon": "codicon:organization"
         },
-        {
-          "name": "Our Services",
-          "redirect": "about-us",
-          "icon": "medical-icon:i-social-services"
-        },
-        {
-          "name": "Client Reviews",
-          "redirect": "about-us",
-          "icon": "material-symbols-light:reviews-outline"
-        },
-        { "name": "Pricing", "redirect": "pricing", "icon": "tdesign:money" },
         {
           "name": "Login",
           "redirect": "auth/login",
@@ -55,37 +33,12 @@
           "redirect": "domain/search",
           "icon": "mdi:search-web",
           "description": "Search the availability of a domain"
-        },
-        {
-          "name": "Register Domain",
-          "redirect": "domain/register",
-          "icon": "ic:baseline-domain-verification",
-          "description": "Register your domain in the internet"
         }
       ]
     },
     {
-      "name": "About",
-      "subcontent": [
-        {
-          "name": "Contact Us",
-          "redirect": "about-us",
-          "icon": "material-symbols:contact-phone-rounded",
-          "description": "Face any problem contact with us"
-        },
-        {
-          "name": "About Us",
-          "redirect": "about-us",
-          "icon": "material-symbols:roundabout-right",
-          "description": "We are leading hosting company"
-        },
-        {
-          "name": "Network",
-          "redirect": "about-us",
-          "icon": "akar-icons:network",
-          "description": "Data must be kept safe and secure"
-        }
-      ]
+      "name": "About us",
+      "redirect": "/about-us"
     }
   ]
 }

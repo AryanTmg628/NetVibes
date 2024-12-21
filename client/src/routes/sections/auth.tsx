@@ -1,4 +1,5 @@
 import { Login } from "../../pages/auth/login/login";
+import { Logout } from "../../pages/auth/logout/logout";
 import { Register } from "../../pages/auth/register/register";
 const authJwt = {
   path: "",
@@ -11,6 +12,10 @@ const authJwt = {
     {
       path: "register",
       element: <Register />,
+    },
+    {
+      path: "logout",
+      element: <Logout />,
     },
   ],
 };

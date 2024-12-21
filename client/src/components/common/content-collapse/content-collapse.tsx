@@ -13,6 +13,7 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
   plus = "ic-round-add",
   minus = "ph-minus-bold",
   showBorder = true,
+  redirect,
   handleClick,
 }) => {
   const [isCollpase, setIsCollapse] = useState(false);
@@ -31,7 +32,14 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
         onClick={toggleCollapse}
         sx={{ "&:hover": { cursor: "pointer" } }}
       >
-        <Typography variant="h6" color="text.black" sx={{ fontSize: "1rem" }}>
+        <Typography
+          variant="h6"
+          color="text.black"
+          sx={{ fontSize: "1rem" }}
+          onClick={() => {
+            if (redirect) handleClick(redirect);
+          }}
+        >
           {title}
         </Typography>
         {subContent && (
@@ -59,8 +67,8 @@ export const ContentCollapse: FC<ContentCollapseInterface> = ({
                 },
               }}
               onClick={() => {
-                  if (handleClick) handleClick(sub?.redirect);
-                }}
+                if (handleClick) handleClick(sub?.redirect);
+              }}
             >
               {sub.icon && <Iconify icon={sub.icon} color="custom.grey.500" />}
               <Typography

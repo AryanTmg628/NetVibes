@@ -141,6 +141,7 @@ export const RegisterForm = () => {
           handleNext={handleNext}
           handleBack={handleBack}
           steps={steps}
+          showButton={true}
         />
         <Stack>
           <Typography variant="body2">
@@ -175,6 +176,7 @@ export const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
   handleNext,
   handleBack,
   steps,
+  showButton = false,
 }) => {
   const theme = useTheme();
 
@@ -209,19 +211,21 @@ export const LinearAlternativeLabel: FC<LinearAlternativeInterface> = ({
         <Typography sx={{ my: 1 }} variant="h4" color="text.black">
           {getCurrentForm()}
         </Typography>
-        <Box sx={{ display: "flex" }}>
-          {activeStep !== 0 && (
-            <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
-              Back
-            </Button>
-          )}
-          <Box sx={{ flexGrow: 1 }} />
-          {activeStep < 2 && (
-            <Button variant="contained" onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Register" : "Next"}
-            </Button>
-          )}
-        </Box>
+        {showButton && (
+          <Box sx={{ display: "flex" }}>
+            {activeStep !== 0 && (
+              <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+                Back
+              </Button>
+            )}
+            <Box sx={{ flexGrow: 1 }} />
+            {activeStep < 2 && (
+              <Button variant="contained" onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "Register" : "Next"}
+              </Button>
+            )}
+          </Box>
+        )}
       </>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { CopyRight } from "../copyright-section/copyright-section";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Logo } from "../../../components/common/logo/logo";
 import FlexBox from "../../../utils/box/styled-box";
 import { ImageComponent } from "../../../components/common/image-component/image-component";
@@ -21,37 +21,12 @@ export const LandingFooter = () => {
 const PaymentOptions = () => {
   return (
     <Stack>
-      <Logo />
-      <FlexBox gap={2}>
-        <FlexBox
-          alignItems="center"
-          paddingX={1}
-          paddingY={0.5}
-          sx={{
-            backgroundColor: "text.primary",
-            width: "100px",
-            boxSizing: "border-box",
-            borderRadius: "0.5rem",
-            border: "1px solid custom.grey.500",
-          }}
-        >
-          <ImageComponent
-            src="https://cdn.esewa.com.np/ui/images/esewa_og.png?111"
-            width="70px"
-          />
-        </FlexBox>
-        <FlexBox
-          alignItems="center"
-          paddingX={1}
-          paddingY={0.5}
-          sx={{
-            backgroundColor: "text.primary",
-            width: "100px",
-            boxSizing: "border-box",
-            borderRadius: "0.5rem",
-          }}
-        >
+      <FlexBox gap={2} justifyContent="center">
+        <FlexBox flexDirection="column" alignItems="center" gap={1}>
           <ImageComponent src={khaltiIcon} width="70px" />
+          <Typography variant="body2" color="custom.grey.700">
+            Payment Accepted{" "}
+          </Typography>
         </FlexBox>
       </FlexBox>
     </Stack>

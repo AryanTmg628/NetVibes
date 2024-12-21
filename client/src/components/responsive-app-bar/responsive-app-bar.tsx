@@ -8,7 +8,7 @@ import {
   Button,
   Drawer,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Iconify from "../common/iconify/iconify";
 import menus from "/src/data/menus.json";
 import FlexBox from "../../utils/box/styled-box";
@@ -21,12 +21,22 @@ import {
 } from "../../interfaces";
 import { ContentCollapse } from "../common/content-collapse/content-collapse";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export const ResponsiveAppBar: FC<{ sx: any }> = ({ sx }) => {
   const navigate = useNavigate();
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
   const handleClick = (path: string) => {
     navigate(`/${path}`);
   };
+  const redirectToDashboard = () => {
+    navigate("/dashboard/home");
+  };
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    if (token) setIsAuthenticate(true);
+    else setIsAuthenticate(false);
+  }, []);
   return (
     <AppBar
       position="relative"
@@ -52,17 +62,26 @@ export const ResponsiveAppBar: FC<{ sx: any }> = ({ sx }) => {
               name={menu.name}
               key={index}
               subcontent={menu?.subcontent}
+              redirect={menu?.redirect}
             />
           ))}
-          <Button
-            sx={{
-              backgroundColor: "primary.light",
-              "&:hover": { backgroundColor: "primary.light" },
-            }}
-            onClick={() => handleClick("auth/register")}
-          >
-            Get Started
-          </Button>
+          {isAuthenticate ? (
+            <Iconify
+              icon="ep:avatar"
+              color="custom.grey.500"
+              onClick={redirectToDashboard}
+            />
+          ) : (
+            <Button
+              sx={{
+                backgroundColor: "primary.light",
+                "&:hover": { backgroundColor: "primary.light" },
+              }}
+              onClick={() => handleClick("auth/register")}
+            >
+              Get Started
+            </Button>
+          )}
         </FlexBox>
       </Toolbar>
     </AppBar>
@@ -122,11 +141,19 @@ export const FeatureMenu = () => {
   );
 };
 
-const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
+const SingleMenu: FC<SingleMenuInterface> = ({
+  name,
+  subcontent,
+  redirect,
+}) => {
   const navigate = useNavigate();
   const [anchorELNav, setAnchorELNav] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorELNav);
   const openMenuItem = (event: React.MouseEvent<HTMLElement>) => {
+    if (!subcontent && redirect) {
+      navigate(redirect);
+      return;
+    }
     setAnchorELNav(event.currentTarget);
   };
 
@@ -149,49 +176,54 @@ const SingleMenu: FC<SingleMenuInterface> = ({ name, subcontent }) => {
         {name}
       </HoverTypography>
 
-      <Iconify
-        icon="mdi-light:chevron-down"
-        color="text.black"
-        sx={{ "&:hover": { cursor: "pointer" } }}
-      />
-      <Menu
-        id="single-menu"
-        anchorEl={anchorELNav}
-        open={open}
-        onClose={closeMenuItem}
-        MenuListProps={{
-          "aria-labelledby": "nav-menu",
-        }}
-      >
-        {subcontent?.map((menu: MenuSubContentInterface, index: number) => (
-          <MenuItem
-            key={index}
-            sx={{
-              color: "text.black",
-              p: "0.5rem 2rem",
-              display: "flex",
-              gap: "1rem",
-              alignItems: "center",
-              "&:hover": { cursor: "pointer" },
-            }}
-          >
-            {menu.icon && (
-              <Iconify
-                width={20}
-                icon={menu.icon}
-                color="primary.light"
-                sx={{ "&:hover": { cursor: "pointer" } }}
-              />
-            )}
-            <Stack spacing={0.3} onClick={() => handleClick(menu?.redirect)}>
-              <Typography variant="body2">{menu?.name}</Typography>
-              <Typography variant="body1" color="custom.grey.200">
-                {menu?.description}
-              </Typography>
-            </Stack>
-          </MenuItem>
-        ))}
-      </Menu>
+      {subcontent?.length > 0 && (
+        <Iconify
+          icon="mdi-light:chevron-down"
+          color="text.black"
+          sx={{ "&:hover": { cursor: "pointer" } }}
+        />
+      )}
+      {subcontent?.length > 0 && (
+        <Menu
+          id="single-menu"
+          anchorEl={anchorELNav}
+          open={open}
+          onClose={closeMenuItem}
+          MenuListProps={{
+            "aria-labelledby": "nav-menu",
+          }}
+        >
+          {subcontent?.map((menu: MenuSubContentInterface, index: number) => (
+            <MenuItem
+              key={index}
+              sx={{
+                color: "text.black",
+                p: "0.5rem 2rem",
+                display: "flex",
+                gap: "1rem",
+                alignItems: "center",
+                "&:hover": { cursor: "pointer" },
+              }}
+              onClick={() => handleClick(menu?.redirect)}
+            >
+              {menu.icon && (
+                <Iconify
+                  width={20}
+                  icon={menu.icon}
+                  color="primary.light"
+                  sx={{ "&:hover": { cursor: "pointer" } }}
+                />
+              )}
+              <Stack spacing={0.3}>
+                <Typography variant="body2">{menu?.name}</Typography>
+                <Typography variant="body1" color="custom.grey.200">
+                  {menu?.description}
+                </Typography>
+              </Stack>
+            </MenuItem>
+          ))}
+        </Menu>
+      )}
     </FlexBox>
   );
 };

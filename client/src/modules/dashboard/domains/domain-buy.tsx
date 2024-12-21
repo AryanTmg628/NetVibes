@@ -1,44 +1,83 @@
-import { Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 import { useKhalti } from "../../../hooks/use-khalti/use-khalti";
 import { LinearAlternativeLabel } from "../../auth/register/register-form";
-import { Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { CustomFormProvider } from "../../../components/hook-form/form-provider/form-provider";
 import { CustomTextField } from "../../../components/hook-form/CustomTextField";
 import FlexBox from "../../../utils/box/styled-box";
 import { CustomCheckBox } from "../../../components/hook-form/custom-check-box";
-import { getAuthDetails } from "../../../store/selectors";
-import { useSelector } from "react-redux";
+import { getAuthDetails, getDomainDetails } from "../../../store/selectors";
+import { useDispatch, useSelector } from "react-redux";
 import domainSchemas from "./schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Payment } from "@mui/icons-material";
 import { ImageComponent } from "../../../components/common/image-component/image-component";
 import khaltiLogo from "../../../assets/images/khalti-logo.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import BlurLoader from "../../../components/common/blur-loader/blur-loader";
+import axios from "axios";
+import paymentServices from "../../../services/payment/payment-services";
+import { domainActions } from "../../../store/actions/domain/domainActions";
 
 export const DomainBuy = () => {
   const steps = ["Personal Information", "DNS Configuration", "Payment"];
   const [activeStep, setActiveStep] = useState(0);
 
-  const allSteps = [
-    <CredentialsForm />,
-    <DNSConfigurationForm />,
-    <PaymentSection />,
-  ];
-
-  const getForm = () => allSteps[activeStep];
-
+  const [formData, setFormData] = useState({
+    personalInfo: {
+      first_name: "",
+      last_name: "",
+      state: "",
+      country: "",
+      street_address: "",
+      city: "",
+      phone_number: "",
+    },
+    dnsConfig: {
+      primary_name_server: "",
+      secondary_name_server: "",
+    },
+  });
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  const allSteps = [
+    <CredentialsForm
+      defaultValues={formData.personalInfo}
+      handleNext={handleNext}
+      handleBack={handleBack}
+      activeStep={activeStep}
+      steps={steps}
+      updateData={(data) =>
+        setFormData((prev) => ({ ...prev, personalInfo: data }))
+      }
+    />,
+    <DNSConfigurationForm
+      defaultValues={formData.dnsConfig}
+      handleNext={handleNext}
+      handleBack={handleBack}
+      activeStep={activeStep}
+      steps={steps}
+      updateData={(data) =>
+        setFormData((prev) => ({ ...prev, dnsConfig: data }))
+      }
+    />,
+    <PaymentSection details={formData} handleBack={handleBack} />,
+  ];
+
+  const getForm = () => allSteps[activeStep];
+  const [searchParams] = useSearchParams();
+  const tld = searchParams.get("tld");
+  const name = searchParams.get("name");
+
   return (
     <Stack>
       <Typography variant="h6" color="primary.light" textAlign="center">
-        Buying Aryan.com.np Domain
+        Buying Domain {name}.{tld}
       </Typography>
       <Stack direction="row" justifyContent="center" marginY={3}>
         <Typography
@@ -66,17 +105,14 @@ export const DomainBuy = () => {
   );
 };
 
-const CredentialsForm = () => {
-  const defaultValues = {
-    first_name: "",
-    last_name: "",
-    state: "",
-    country: "",
-    street_address: "",
-    city: "",
-    phone_number: "",
-  };
-
+const CredentialsForm = ({
+  defaultValues,
+  handleNext,
+  handleBack,
+  activeStep,
+  steps,
+  updateData,
+}) => {
   const autoFillDefaultValues = {
     auto_fill: false,
   };
@@ -90,6 +126,12 @@ const CredentialsForm = () => {
   });
 
   const autoFill = autoFillMethods.watch("auto_fill");
+
+  const nextHandle = methods.handleSubmit((data) => {
+    const formdata = methods.getValues();
+    updateData(formdata);
+    handleNext();
+  });
 
   useEffect(() => {
     if (autoFill) methods.reset(currentUser);
@@ -121,20 +163,40 @@ const CredentialsForm = () => {
           <CustomTextField name="country" label="Country" />
           <CustomTextField name="phone_number" label="Phone number" />
         </Stack>
+        <Box sx={{ display: "flex" }}>
+          {activeStep !== 0 && (
+            <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+              Back
+            </Button>
+          )}
+          <Box sx={{ flexGrow: 1 }} />
+          {activeStep < 2 && (
+            <Button variant="contained" onClick={nextHandle}>
+              {activeStep === steps.length - 1 ? "Register" : "Next"}
+            </Button>
+          )}
+        </Box>
       </CustomFormProvider>
     </Fragment>
   );
 };
 
-const DNSConfigurationForm = () => {
-  const defaultValues = {
-    primary_name_server: "",
-    secondary_name_server: "",
-  };
-
+const DNSConfigurationForm = ({
+  defaultValues,
+  handleNext,
+  handleBack,
+  activeStep,
+  steps,
+  updateData,
+}) => {
   const methods = useForm({
     defaultValues,
     resolver: yupResolver(domainSchemas.dnsConfigurationFormSchema),
+  });
+  const nextHandle = methods.handleSubmit((data) => {
+    const formdata = methods.getValues();
+    updateData(formdata);
+    handleNext();
   });
 
   return (
@@ -166,36 +228,68 @@ const DNSConfigurationForm = () => {
           </Stack>
         </FlexBox>
       </Stack>
+      <Box sx={{ display: "flex" }}>
+        {activeStep !== 0 && (
+          <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+            Back
+          </Button>
+        )}
+        <Box sx={{ flexGrow: 1 }} />
+        {activeStep < 2 && (
+          <Button variant="contained" onClick={nextHandle}>
+            {activeStep === steps.length - 1 ? "Register" : "Next"}
+          </Button>
+        )}
+      </Box>
     </CustomFormProvider>
   );
 };
 
-const PaymentSection = () => {
-  const product = { price: 1, id: 1, name: "" };
-  const navigate = useNavigate();
+const PaymentSection: FC<{ details: Object }> = ({ details, handleBack }) => {
+  const [searchParams] = useSearchParams();
+  const tld = searchParams.get("tld");
+  const name = searchParams.get("name");
+  const { tldsList } = useSelector(getDomainDetails);
+  const dispatch = useDispatch();
 
-  const { initiate, initiationError, isLoading } = useKhalti({
-    onSuccess: (response) => {
-      // Navigate to success page with payment details
-      navigate(`/success`, { state: { product, response } });
-    },
-    onError: (error) => {
-      console.error("Payment error:", error.message);
-    },
-  });
+  useEffect(() => {
+    if (tldsList.length === 0) dispatch(domainActions.fetchTLDLists());
+  }, [tldsList]);
 
-  const handlePayment = () => {
-    if (product) {
-      const paymentRequest = {
-        amount: product.price * 100, // Convert NPR to paisa
-        purchase_order_id: `order-${product.id}`,
-        purchase_order_name: product.name,
-        return_url: "http://localhost:80/success",
-        website_url: "http://localhost:80",
-      };
-      initiate(paymentRequest);
+  const getAmount = () => {
+    const selectedTLD = tldsList.find((tl) => tl.name == tld);
+    if (selectedTLD) return selectedTLD.price_pm;
+  };
+
+  const handlePayment = async () => {
+    const paymentRequest = {
+      amount: getAmount() * 100, // Convert NPR to paisa
+      purchase_order_id: 1,
+      purchase_order_name: `${name}.${tld}`,
+      return_url: "http://localhost:80/payment-result",
+      website_url: "http://localhost:80",
+      customer_info: {
+        name: "Aryan Tamang",
+        email: "aryantamang@tuicms.edu.np",
+        phone: "9767980111",
+      },
+    };
+    try {
+      const res = await paymentServices.sendPaymentDetails(paymentRequest);
+      if (res.success) {
+        dispatch(
+          domainActions.setRegisterDomainDetails({
+            ...details,
+            ["domain_name"]: `${name}.${tld}`,
+          }),
+        );
+        window.location.href = res.data.payment_url;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
   return (
     <FlexBox
       justifyContent="center"
@@ -204,12 +298,6 @@ const PaymentSection = () => {
       alignItems="center"
       gap={2}
     >
-      {isLoading && <BlurLoader />}
-      {initiationError && (
-        <Typography variant="body1">
-          Error: {initiationError.message}
-        </Typography>
-      )}
       <FlexBox
         flexDirection="column"
         gap={1}
@@ -234,6 +322,11 @@ const PaymentSection = () => {
           </Tooltip>
         </FlexBox>
       </FlexBox>
+      <Box sx={{ display: "flex" }}>
+        <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+          Back
+        </Button>
+      </Box>
     </FlexBox>
   );
 };

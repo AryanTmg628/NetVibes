@@ -8,12 +8,11 @@ import khalti from "../../../assets/images/khalti-logo.svg";
 export const CopyRight: FC = () => {
   return (
     <FlexBox justifyContent="center">
-      <FlexBox justifyContent="space-between" width={1} maxWidth="1000px">
-        <Typography variant="body2" color="custom?.grey?.500">
-          &copy; Copyrights @2024. All rights reserved by
-          <Link>Aryan Tamang.</Link>
-        </Typography>
-      </FlexBox>
+      {/* <FlexBox justifyContent="space-between" width={1} maxWidth="1000px"> */}
+      <Typography variant="body2" color="custom.grey.500">
+        &copy; Copyrights @2024. All rights reserved by
+        <Link sx={{ marginLeft: "0.5rem" }}>Aryan Tamang.</Link>
+      </Typography>
     </FlexBox>
   );
 };

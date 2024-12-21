@@ -50,6 +50,7 @@ export interface ContentCollapseInterface {
   minus?: string;
   showBorder?: boolean;
   handleClick?: (path: string) => void;
+  redirect?: string;
 }
 
 export interface CustomFormProviderInterface {

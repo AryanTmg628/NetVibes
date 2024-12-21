@@ -26,6 +26,8 @@ export function useKhalti({
         data,
       );
 
+      console.log("The response", response);
+
       const paymentResponse = response.data;
       setPidx(paymentResponse.pidx);
 

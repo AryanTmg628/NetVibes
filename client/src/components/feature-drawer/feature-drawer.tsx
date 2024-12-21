@@ -87,9 +87,9 @@ export default function FeatureDrawer() {
     navigate("/");
   };
 
-  const changePath = (path : string) => {
-      navigate(`${path}`)
-  }
+  const changePath = (path: string) => {
+    navigate(`${path}`);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -160,6 +160,7 @@ export default function FeatureDrawer() {
                 plus="pajamas:chevron-down"
                 minus="pajamas:chevron-up"
                 key={index}
+                redirect={feat?.redirect}
                 handleClick={changePath}
               />
             ))}

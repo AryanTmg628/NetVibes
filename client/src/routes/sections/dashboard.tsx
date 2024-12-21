@@ -2,12 +2,19 @@ import { ChangePassword } from "../../modules/dashboard/account-details/change-p
 import { EditAccountDetails } from "../../modules/dashboard/account-details/edit-account-details";
 import { DomainBuy } from "../../modules/dashboard/domains/domain-buy";
 import { RegisterDomain } from "../../modules/dashboard/domains/register-domain";
+import { Home } from "../../modules/dashboard/home/home";
 import { DashBoard } from "../../pages/dashboard/dashboard";
+import { ProtectedRoutes } from "../protected-routes";
 
 const dashBoard = {
   path: "",
   element: <DashBoard />,
   children: [
+    {
+      path: "home",
+      element: <Home />,
+    },
+
     {
       path: "edit-account-details",
       element: <EditAccountDetails />,
