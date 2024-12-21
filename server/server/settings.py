@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "authentication",
     "email_service",
     "domain",
+    "payment",
+    "order",
     "rest_framework_swagger",
     "drf_yasg",
     "corsheaders",

@@ -21,3 +21,9 @@ class VerifyRegisterSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(max_length=150)
+
+
+class UserDetailSerialiser(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
